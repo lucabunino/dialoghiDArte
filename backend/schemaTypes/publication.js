@@ -1,20 +1,19 @@
 import {BookIcon} from '@sanity/icons'
 
 export default {
-  name: 'pubblication',
+  name: 'publication',
   title: 'Pubblicazione',
   icon: BookIcon,
   type: 'document',
   fieldsets: [
     {
       name: 'info',
-      get: 'Informazioni',
+      title: 'Informazioni',
       options: { columns: 2 },
     },
     {
       name: 'buy',
       title: 'Acquisto',
-      options: { columns: 2 },
     },
   ],
   fields: [
@@ -32,6 +31,19 @@ export default {
         source: 'title',
         maxLength: 96,
       },
+    },
+    {
+      name: 'date',
+      title: 'Data',
+      type: 'date',
+      initialValue: () => new Date().toISOString().split('T')[0],
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'series',
+      title: 'Collana',
+      type: 'reference',
+      to: [{type: 'series'}],
     },
     {
       name: 'thumbnail',
@@ -76,18 +88,6 @@ export default {
       ],
     },
     {
-      name: 'logos',
-      title: 'Loghi',
-      type: 'array',
-      of: [
-        {
-          name: 'logo',
-          type: 'reference',
-          to: [{type: 'entity'}]
-        }
-      ]
-    },
-    {
       name: 'curator',
       title: 'A cura di',
       type: 'reference',
@@ -114,8 +114,14 @@ export default {
       fieldset: 'info'
     },
     {
-      name: 'whereToBuy',
-      title: 'Dove acquistare',
+      name: 'buyLink',
+      title: 'Link di acquisto',
+      type: 'url',
+      fieldset: 'buy'
+    },
+    {
+      name: 'buyMessage',
+      title: 'Messaggio di acquisto',
       type: 'string',
       fieldset: 'buy'
     },

@@ -5,33 +5,22 @@ export const myStructure = (S, context) => {
     S.divider(),
     S.documentTypeListItem('whatWeDo')
       .title('Cosa facciamo'),
-    S.documentTypeListItem('pubblication')
+    S.documentTypeListItem('publication')
       .title('Pubblicazioni'),
   ];
   const pages = [
     S.divider(),
     S.listItem()
-      .title('Pagine')
-      .icon(DocumentIcon)
-      .child(
-        S.list()
-          .title('Pagine')
-          .items([
-            S.listItem()
-              .title('Homepage')
-              .icon(HomeIcon)
-              .child(S.document().schemaType('homepage').documentId('homepage')),
-            S.listItem()
-              .title('Dd’A Consiglia')
-              .icon(LinkIcon)
-              .child(S.document().schemaType('advice').documentId('advice')),
-          ])
-      ),
+      .title('Homepage')
+      .icon(HomeIcon)
+      .child(S.document().schemaType('homepage').documentId('homepage')),
   ];
   const references = [
     S.divider(),
     S.documentTypeListItem('category')
       .title('Categorie'),
+    S.documentTypeListItem('series')
+      .title('Collane'),
     S.documentTypeListItem('person')
       .title('Persone'),
     S.documentTypeListItem('entity')

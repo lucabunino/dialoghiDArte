@@ -1,15 +1,21 @@
-import { FilterIcon } from '@sanity/icons'
+import { TagsIcon } from '@sanity/icons'
 
 export default {
-  name: 'category',
-  title: 'Categoria',
+  name: 'series',
+  title: 'Collana',
   type: 'document',
-  icon: FilterIcon,
+  icon: TagsIcon,
   fields: [
     {
       name: 'title',
       title: 'Titolo',
       type: 'string',
+    },
+    {
+      name: 'description',
+      title: 'Descrizione',
+      type: 'text',
+      rows: 2,
     },
     {
       name: 'slug',

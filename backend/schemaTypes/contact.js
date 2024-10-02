@@ -13,19 +13,14 @@ export default {
       hidden: true,
     },
     {
-      name: 'legalForm',
-      title: 'Forma giuridica',
+      name: 'companyName',
+      title: 'Ragione sociale',
       type: 'string',      
     },
     {
-      name: 'vat',
-      title: 'Partita IVA',
-      type: 'string',
-    },
-    {
-      name: 'email',
-      title: 'Email',
-      type: 'string',
+      name: 'legalForm',
+      title: 'Forma giuridica',
+      type: 'string',      
     },
     {
       name: 'adresses',
@@ -40,8 +35,7 @@ export default {
             {
               name: 'adressName',
               title: 'Nome indirizzo',
-              type: 'text',
-              rows: 3
+              type: 'string',
             },
             {
               name: 'adressGoogleMaps',
@@ -56,6 +50,16 @@ export default {
           }
         }
       ]
+    },
+    {
+      name: 'vat',
+      title: 'Partita IVA',
+      type: 'string',
+    },
+    {
+      name: 'email',
+      title: 'Email',
+      type: 'string',
     },
     {
       name: 'socials',

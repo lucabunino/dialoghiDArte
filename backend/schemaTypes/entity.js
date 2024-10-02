@@ -12,19 +12,9 @@ export default {
       type: 'string',
     },
     {
-      name: 'logo',
-      title: 'Logo',
-      type: 'file',
-    },
-    {
       name: 'link',
       title: 'Link',
       type: 'url',
     },
   ],
-  preview: {
-    select: {
-      title: 'title',
-    },
-  },
 };

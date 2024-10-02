@@ -1,8 +1,8 @@
 import whatWeDo from './whatWeDo'
 import category from './category'
-import pubblication from './pubblication'
+import series from './series'
+import publication from './publication'
 import homepage from './homepage'
-import advice from './advice'
 import person from './person'
 import entity from './entity'
 import seo from './seo'
@@ -10,10 +10,10 @@ import contact from './contact'
 
 export const schemaTypes = [
   whatWeDo,
-  pubblication,
+  publication,
   category,
+  series,
   homepage,
-  advice,
   person,
   entity,
   seo,

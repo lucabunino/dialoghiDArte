@@ -10,6 +10,7 @@ export default {
       name: 'title',
       title: 'Titolo',
       type: 'string',
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'subtitle',
@@ -20,16 +21,33 @@ export default {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      validation: (Rule) => Rule.required(),
       options: {
         source: 'title',
         maxLength: 96,
       },
+      validation: (Rule) => Rule.required(),
     },
     {
-      name: 'archiveOnly',
-      title: 'Mostra solamente in archivio',
-      type: 'boolean',
+      name: 'date',
+      title: 'Data',
+      type: 'date',
+      initialValue: () => new Date().toISOString().split('T')[0],
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'collector',
+      title: 'Raccoglitore',
+      description: 'Indicare dove verrà mostrato l’oggetto (scelta esclusiva)',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Mostra in Cosa facciamo', value: 'whatWeDo'},
+          {title: 'Mostra in Archivio', value: 'archive'},
+        ],
+        layout: 'radio'
+      },
+      initialValue: 'whatWeDo',
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'category',
@@ -40,22 +58,19 @@ export default {
           type: 'reference',
           to: [{type: 'category'}],
         }
-      ]
+      ],
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'thumbnail',
       title: 'Immagine di copertina',
       type: 'image',
+      validation: (Rule) => Rule.required(),
     },
     {
-      name: 'images',
-      title: 'Immagini interne',
-      type: 'array',
-      of: [
-        {
-          type: 'image',
-        }
-      ]
+      name: 'image',
+      title: 'Immagine interna',
+      type: 'image',
     },
     {
       name: 'body',

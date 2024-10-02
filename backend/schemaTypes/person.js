@@ -5,10 +5,23 @@ export default {
   title: 'Persona',
   type: 'document',
   icon: UserIcon,
+  fieldsets: [
+    {
+      name: 'where',
+      title: 'Raccoglitore',
+      description: 'Indicare dove verrà mostrata la persona (scelta indipendente)',
+      options: { columns: 2 },
+    }
+  ],
   fields: [
     {
-      name: 'title',
+      name: 'name',
       title: 'Nome',
+      type: 'string',
+    },
+    {
+      name: 'surname',
+      title: 'Cognome',
       type: 'string',
     },
     {
@@ -23,8 +36,22 @@ export default {
     },
     {
       name: 'role',
-      title: 'Ruolo',
+      title: 'Ruolo/professione',
       type: 'string',
+    },
+    {
+      name: 'withWhom',
+      title: 'Mostra in Con chi',
+      type: 'boolean',
+      initialValue: true,
+      fieldset: 'where',
+    },
+    {
+      name: 'singlePage',
+      title: 'Mostra in Pagina singola',
+      type: 'boolean',
+      initialValue: false,
+      fieldset: 'where',
     },
     {
       name: 'email',
@@ -74,4 +101,32 @@ export default {
       ]
     },
   ],
+  orderings: [
+    {
+      title: 'Cognome',
+      name: 'surnameAsc',
+      by: [
+        { field: 'surname', direction: 'asc' },
+      ],
+    },
+    {
+      title: 'Nome',
+      name: 'nameAsc',
+      by: [
+        { field: 'name', direction: 'asc' },
+      ],
+    },
+  ],
+  preview: {
+    select: {
+      name: 'name',
+      surname: 'surname',
+    },
+    prepare(selection) {
+      const {name, surname} = selection;
+      return {
+        title: `${name} ${surname}`,
+      };
+    }
+  }
 };
