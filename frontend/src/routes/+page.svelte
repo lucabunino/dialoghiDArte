@@ -57,16 +57,27 @@
 <section id="con-chi" title="Con chi">
   <h2 class="con-chi-title text-xl">Con chi</h2>
     <swiper-container class="con-chi-container"
-    slides-per-view={4.5}
+    slides-per-view={1.5}
     space-between={10}
     speed={500}
-    slides-offset-before={20}
-    slides-offset-after={20}
-    freeMode={true}
+    slides-offset-before={10}
+    slides-offset-after={10}
+    freeMode={false}
     loop={false}
     mousewheel-force-to-axis={true}
     mousewheel-sensitivity={1}
     mousewheel-release-on-edges={true}
+    breakpoints={{
+      1200: {
+        slidesPerView: 4.5,
+      },
+      900: {
+        slidesPerView: 3.5,
+      },
+      600: {
+        slidesPerView: 2.5,
+      },
+    }}
     >
       {#each data.people as person, i}
         <swiper-slide class="person" class:hidden={!visible}>
@@ -181,6 +192,12 @@ h2 {
 .cta {
   margin-top: calc(var(--margin)*3);
 }
+@media screen and (max-width: 900px) {
+  .cta {
+    margin-top: calc(var(--margin)*4.5);
+  }
+}
+
 
 /* Hero */
 #hero {
@@ -211,6 +228,17 @@ h2 {
   bottom: calc(var(--gutter)*4);
   color: var(--bg);
   width: calc((100% - var(--gutter) - var(--margin)*2)/2);
+}
+@media screen and (max-width: 900px) {
+  .hero-fg-container {
+    width: 70%;
+    max-width: unset;
+  }
+  .hero-text {
+    margin-right: var(--margin);
+    bottom: calc(var(--margin)*4);
+    width: auto;
+  }
 }
 
 /* Cosa facciamo */
@@ -247,9 +275,11 @@ h2 {
   justify-items: start;
   gap: var(--gutter);
   margin-top: calc(var(--margin)*3);
+  font-weight: 400;
 }
 .chi-siamo-intro {
   width: calc((100% - var(--gutter))/2);
+  font-weight: 400;
 }
 .chi-siamo-column {
   display: flex;
@@ -262,15 +292,11 @@ h2 {
 }
 .chi-siamo-title {
   margin-bottom: var(--gutter);
+  font-weight: 500;
 }
 .chi-siamo-contacts-download {
   grid-column: 6 / 10;
   width: 100%;
-}
-.download {
-  /* color: var(--blue);
-  border-bottom: solid 1px var(--blue);
-  display: inline-block; */
 }
 .chi-siamo-custom {
   grid-column: 10 / 17;
@@ -281,5 +307,36 @@ h2 {
 .archivio-container {
 
 }
-
+@media screen and (max-width: 900px) {
+  .publications-titles {
+    display: none;
+  }
+  .publications-container > :nth-child(n+3) {
+    display: none;
+  }
+  .con-chi-container {
+    width: -webkit-fill-available;
+  }
+  
+  .chi-siamo-intro {
+    width: 100%;
+  }
+  .chi-siamo-column {
+    gap: calc(var(--margin)*3);
+  }
+  .chi-siamo-people {
+    grid-column: 1 / 17;
+  }
+  .chi-siamo-contacts-download {
+    grid-column: 1 / 17;
+  }
+  .chi-siamo-custom {
+    grid-column: 1 / 17;
+  }
+}
+@media screen and (max-width: 600px) {
+  .publications-container > :nth-child(n+2) {
+    display: none;
+  }
+}
 </style>

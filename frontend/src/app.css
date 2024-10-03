@@ -249,14 +249,36 @@ a:-webkit-any-link {
   }
 }
 @media screen and (max-width: 900px) {
+  :root {
+    --gutter: 5px;
+    --margin: 10px;
+  }
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .mobile-only {
-    display: inherit;
+  .text-xl {
+    font-size: 2.1428rem;
+  }
+  .text-l {
+    font-size: 1.1428rem;
+  }
+  .text-m {
+    font-size: 1.1428rem;
+  }
+  .text-xs {
+    font-size: 0.8125rem;
+  }
+  .tags {
+    font-size: 0.7142rem;
+  }
+  .person-title {
+    margin-top: calc(var(--gutter)*2);
   }
 }
 @media screen and (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
   .btn:hover {
     background-color: inherit;
     color: inherit;
@@ -356,4 +378,9 @@ section.list>.grid {
 }
 .block {
   display: block !important;
+}
+@media screen and (max-width: 900px) {
+  .mobile-only {
+    display: inherit;
+  }
 }

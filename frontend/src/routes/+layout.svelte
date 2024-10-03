@@ -213,9 +213,6 @@ header.up {
   color: var(--black);
   height: 2.5rem;
 }
-#menuSwitch {
-  position: fixed;
-}
 #menu {
   display: flex;
   list-style: none;
@@ -229,6 +226,30 @@ header.up {
 .menu-item:hover>#logo, .menu-item.active>a {
   color: var(--blue);
   fill: var(--blue);
+}
+@media screen and (max-width: 900px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: 62px;
+    padding: 0;
+    padding-left: var(--margin);
+  }
+  #logo {
+    height: 30px;
+    margin: 16px 0;
+  }
+  #menuSwitch {
+    position: fixed;
+    top: var(--margin);
+    right: var(--margin);
+  }
+  #menu {
+    flex-direction: column;
+    margin-top: calc(var(--margin)*4);
+    margin-bottom: calc(var(--margin)*4);
+  }
 }
 
 /* Main */
@@ -271,6 +292,11 @@ footer a:hover {
 .ig-icon {
   width: 1.25rem;
   margin-top: 0.3125rem;
+}
+@media screen and (max-width: 900px) {
+  footer {
+    flex-direction: column;
+  }
 }
 
 /* Newsletter */
