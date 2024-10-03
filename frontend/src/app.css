@@ -297,7 +297,7 @@ a:-webkit-any-link {
   .grid {
     grid-template-columns: repeat(1, 1fr);
   }
-  *:not(.list).grid>a:nth-child(n+2) {
+  *:not(.list).grid>.publication:nth-child(n+2) {
     display: none;
   }
   .headings>.tags>.tag:hover {

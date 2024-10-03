@@ -181,7 +181,7 @@
   <h2 class="text-xl">Archivio</h2>
   <div class="archivio-container grid">
     {#each data.archive as item, i}
-      <a class="item" href="/cosa-facciamo/{item.slug.current}">
+      <a class="item" href="/archivio/{item.slug.current}">
         <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset).width(900) : ''} alt="">
         <div class="tags">
           {#each item.category as category}

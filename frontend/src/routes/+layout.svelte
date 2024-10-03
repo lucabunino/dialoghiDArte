@@ -36,8 +36,6 @@
 
   $effect(() => {
     if (scrollY < headerHeight) {
-      console.log('forcedDown');
-      
       scrolledDown = false;
     }
   })
@@ -80,17 +78,17 @@
 </script>
 
 <svelte:head>
-  <title>TODO: Title</title>
-  <meta name="description" content="TODO: Description">
+  <title>{data.seo[0].SEOTitle ? data.seo[0].SEOTitle : ''}</title>
+  <meta name="description" content={data.seo[0].SEOTitle ? data.seo[0].SEOTitle : ''}>
   <link rel="canonical" href={$page.url}>
   <meta name="robots" content="index,follow">
   <meta name="googlebot" content="index,follow">
-  <meta property="og:title" content="TODO: Title">
-  <meta property="og:description" content="TODO: Description">
-  <meta property="og:image" content="/seo.webp">
+  <meta property="og:title" content={data.seo[0].SEOTitle ? data.seo[0].SEOTitle : ''}>
+  <meta property="og:description" content={data.seo[0].SEODescription ? data.seo[0].SEODescription : ''}>
+  <meta property="og:image" content={data.seo[0].SEOImage ? urlFor(data.seo[0].SEOImage) : ''}>
   <meta property="og:url" content={$page.url}>
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Title">
+  <meta property="og:site_name" content={data.seo[0].SEOTitle ? data.seo[0].SEOTitle : ''}>
 </svelte:head>
 
 <svelte:window onkeyup={handleKey} bind:scrollY bind:innerHeight bind:innerWidth onscroll={handleScroll}></svelte:window>
