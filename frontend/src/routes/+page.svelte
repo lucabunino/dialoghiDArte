@@ -76,21 +76,24 @@
     mousewheel-release-on-edges={true}
     breakpoints={{
       '1900': {
-        slidesPerView: 6.5,
+        slidesPerView: 7.3,
       },
       '1600': {
-        slidesPerView: 5.5,
+        slidesPerView: 6.3,
       },
       '1200': {
-        slidesPerView: 4.5,
+        slidesPerView: 5.3,
       },
       '900': {
-        slidesPerView: 3.5,
+        slidesPerView: 4.3,
         slidesOffsetBefore: 20,
         slidesOffsetAfter: 20,
       },
+      '750': {
+        slidesPerView: 3.3,
+      },
       '600': {
-        slidesPerView: 2.5,
+        slidesPerView: 2.4,
       },
     }}
     >
@@ -300,7 +303,8 @@ h2 {
   display: grid;
   grid-template-columns: repeat(16, 1fr);
   justify-items: start;
-  gap: var(--gutter);
+  column-gap: var(--gutter);
+  row-gap: calc(var(--margin)*3);
   margin-top: calc(var(--margin)*3);
   font-weight: 400;
 }
