@@ -5,7 +5,11 @@
   import { urlFor } from '$lib/utils/image';
   import { PortableText } from '@portabletext/svelte'
   import PortableTextStyle from '$lib/components/portableTextStyle.svelte';
+
+  let innerWidth = $state()
 </script>
+
+<svelte:window bind:innerWidth></svelte:window>
 
 <section class="single">
   <div class="navigator">
@@ -24,7 +28,7 @@
         />
       </div>
     </div>
-    <img class="img square" src={urlFor(data.person[0].thumbnail)} alt="">
+    <img class="img square" src={urlFor(data.person[0].thumbnail).width(innerWidth > 600 ? 1280 : 900)} alt="">
   </div>
 </section>
 

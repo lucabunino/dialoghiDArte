@@ -76,6 +76,7 @@ export async function getPublicationsHomepage() {
         title,
         slug,
         curator-> { "title": name + " " + surname, },
+				series-> {title, slug },
         thumbnail
       }
     }

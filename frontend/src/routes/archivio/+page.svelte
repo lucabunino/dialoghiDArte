@@ -40,7 +40,7 @@
   <div class="archivio-container grid">
     {#each data.archive as item, i}
     <a class="item" href="/archivio/{item.slug.current}">
-      <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset) : ''} alt="">
+      <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset).width(900) : ''} alt="">
       <div class="tags">
         {#each item.category as category}
         <!-- <a href="/archivio?category={category.slug.current}" class="btn tag">{category.title}</a> -->

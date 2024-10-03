@@ -33,7 +33,8 @@ export default {
           title: 'Immagine in primo piano',
           type: 'image',
         }
-      ]
+      ],
+      group: 'hero',
     },
     {
       name: 'imagesBackground',
@@ -45,7 +46,8 @@ export default {
           title: 'Immagine di sfondo',
           type: 'image',
         }
-      ]
+      ],
+      group: 'hero',
     },
     {
       name: 'series',

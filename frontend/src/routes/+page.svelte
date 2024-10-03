@@ -3,11 +3,12 @@
   import { urlFor } from '$lib/utils/image';
   import { register } from 'swiper/element/bundle';
   register();
-
   import { onMount } from 'svelte'
   import { pushState } from '$app/navigation'
 
+  let innerWidth = $state()
   let visible = $state(false)
+  
   onMount(() => {
     visible=true
   });
@@ -17,8 +18,10 @@
   }
 </script>
 
+<svelte:window bind:innerWidth></svelte:window>
+
 <section id="hero">
-  <div class="hero-bg" style="background-image: url({urlFor(data.imageBackground.asset)})">
+  <div class="hero-bg" style="background-image: url({urlFor(data.imageBackground.asset).width(innerWidth > 900 ? 2560 : 1280)})">
     <swiper-container class="hero-fg-container"
     autoplay-delay=4000
     speed="500"
@@ -27,7 +30,7 @@
     >
       {#each data.homepage[0].imagesForeground as imageForeground, i}
         <swiper-slide class:hidden={!visible && i > 0}>
-          <img class="hero-fg" src={urlFor(imageForeground.asset)} alt="">
+          <img class="hero-fg" src={urlFor(imageForeground.asset).width(900)} alt="">
         </swiper-slide>
       {/each}
     </swiper-container>
@@ -40,7 +43,7 @@
   <div class="cosa-facciamo-container grid">
     {#each data.whatWeDos as item, i}
     <a class="item" href="/cosa-facciamo/{item.slug.current}">
-      <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset) : ''} alt="">
+      <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset).width(900) : ''} alt="">
       <div class="tags">
         {#each item.category as category}
           <!-- <a href="/cosa-facciamo?category={category.slug.current}" class="btn tag">{category.title}</a> -->
@@ -62,17 +65,29 @@
     speed={500}
     slides-offset-before={10}
     slides-offset-after={10}
-    freeMode={false}
+    freeMode={{
+      enabled: true,
+      sticky: true,
+    }}
+    grabCursor={true}
     loop={false}
     mousewheel-force-to-axis={true}
     mousewheel-sensitivity={1}
     mousewheel-release-on-edges={true}
     breakpoints={{
+      1900: {
+        slidesPerView: 6.5,
+      },
+      1600: {
+        slidesPerView: 5.5,
+      },
       1200: {
         slidesPerView: 4.5,
       },
       900: {
         slidesPerView: 3.5,
+        slidesOffsetBefore: 20,
+        slidesOffsetAfter: 20,
       },
       600: {
         slidesPerView: 2.5,
@@ -81,7 +96,7 @@
     >
       {#each data.people as person, i}
         <swiper-slide class="person" class:hidden={!visible}>
-          <img class="thumbnail" src={person.thumbnail ? urlFor(person.thumbnail.asset) : ''} alt="">
+          <img class="thumbnail" src={person.thumbnail ? urlFor(person.thumbnail.asset).width(900) : ''} alt="">
           <h3 class="person-title text-m">{person.title}</h3>
           {#if person.role}<p class="person-role uppercase">{person.role}</p>{/if}
         </swiper-slide>
@@ -100,10 +115,15 @@
     <div class="publications-container grid">
       {#each series.publications as publication, j}
         <a class="publication" href="/pubblicazioni/{publication.slug.current}">
-          <img class="thumbnail" src={publication.thumbnail ? urlFor(publication.thumbnail.asset) : ''} alt="">
+          <img class="thumbnail" src={publication.thumbnail ? urlFor(publication.thumbnail.asset).width(900) : ''} alt="">
+          {#if publication.series}
+            <div class="tags mobile-only">
+              <button class="btn tag pointer-events-none">{publication.series.title}</button>
+            </div> 
+          {/if}
           <h3 class="publication-title text-m">{publication.title}</h3>
-          <p class="uppercase block">#Pubblicazioni</p>
-          {#if publication.curator} <p class="publication-curator uppercase block">A cura di {publication.curator.title}</p>{/if}
+          <p class="uppercase block">#Publicazioni</p>
+          {#if publication.curator}<p class="publication-curator uppercase block">A cura di {publication.curator.title}</p>{/if}
         </a>
       {/each}
     </div>
@@ -162,7 +182,7 @@
   <div class="archivio-container grid">
     {#each data.archive as item, i}
       <a class="item" href="/cosa-facciamo/{item.slug.current}">
-        <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset) : ''} alt="">
+        <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset).width(900) : ''} alt="">
         <div class="tags">
           {#each item.category as category}
             <!-- <a href="/archivio?category={category.slug.current}" class="btn tag">{category.title}</a> -->

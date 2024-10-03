@@ -20,16 +20,19 @@
   let scrolledDown = $state()
   let headerHeight = $state()
   let headerFixed = $state(false)
+  let showMenu = $state(false)
+  let menuHeight = $state()
 
   afterNavigate (() => {
     if ($page.url.hash) {
       headerFixed = true
       const element = document.querySelector($page.url.hash + '>h2');
       if (element) {
-        const targetPosition = element.getBoundingClientRect().top + scrollY - headerHeight;
+        const targetPosition = element.getBoundingClientRect().top + scrollY - headerHeight - 40;
         window.scrollTo({ top: targetPosition });
       }
     }
+    showMenu = false
   });
 
   $effect(() => {
@@ -102,15 +105,20 @@
   </div>
 {/if}
 
-<header bind:clientHeight={headerHeight} class:up={scrolledDown}>
-  <a class="menu-item" href="/">
+<header class:up={scrolledDown} class:down={showMenu}>
+  <a class="menu-item" href="/" bind:clientHeight={headerHeight}>
     <svg id="logo" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 45">
       <path d="M70.94 28.51c0-6.5-4.21-10.18-8.79-10.18s-8.97 3.49-8.97 10.24 4.45 10.36 8.91 10.36 8.85-3.86 8.85-10.42Zm-26.54 0c0-10.06 7.81-16.25 16.11-16.25 4.82 0 8.36 2.08 10.07 3.99h.24V0h8.79v44.14h-8.05l-.61-3.56h-.3c-1.4 1.65-5.31 4.41-10.62 4.41-8.24 0-15.62-6.68-15.62-16.49Zm62.24-19.19h.24l6.65 17.41H99.99l6.65-17.41ZM101.82 0 83.58 44.14h9.94l3.97-10.12h18.48L120 44.14h10L111.7 0h-9.88ZM16.71 37.09c8.05 0 15.98-2.21 15.98-14.53S24.76 7.05 16.71 7.05h-7.5v30.04h7.5ZM0 0h18.3c12.87 0 23.61 7.23 23.61 22.56s-10.74 21.58-23.3 21.58H0V0Zm84.89 15.08c4.15-.8 5.06-2.82 5.06-4.29 0-1.78-1.4-2.21-2.93-2.45-1.52-.24-3.29-1.47-3.29-4.05 0-2.21 1.71-3.86 4.09-3.86 2.99 0 5.43 2.7 5.43 7.05 0 5.83-3.9 8.64-8.17 9.2l-.18-1.59Z"/>
     </svg>
   </a>
-  <nav>
-    <button class="mobile-only" id="menuSwitch">Menu</button>
-    <ul id="menu">
+  <nav style="max-height: {showMenu ? menuHeight + headerHeight : ''}px">
+    <!-- <button class="mobile-only" id="menuSwitch" onclick={(e) => {showMenu = !showMenu}}>Menu</button> -->
+    <div class="mobile-only" id="menuSwitch" onclick={(e) => {showMenu = !showMenu}} class:crossed={showMenu}>
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+    <ul id="menu" bind:clientHeight={menuHeight}>
       <li class="menu-item underline" class:active={$page.url.pathname == '/cosa-facciamo' || $page.url.pathname.includes('/cosa-facciamo/')}><a href="/cosa-facciamo">Cosa facciamo</a></li>
       <li class="menu-item underline" class:active={$page.url.pathname == '/con-chi'}><a href="/con-chi">Con chi</a></li>
       <li class="menu-item underline" class:active={$page.url.pathname == '/pubblicazioni' || $page.url.pathname.includes('/pubblicazioni/')}><a href="/pubblicazioni">Pubblicazioni</a></li>
@@ -121,7 +129,8 @@
 </header>
 
 {#key data.pathname}
-  <main style="margin-top: {headerHeight}px">
+  <!-- <main style="margin-top: {innerWidth > 900 ? headerHeight+40 : headerHeight}px"> -->
+  <main>
     {@render children()}
   </main>
 {/key}
@@ -135,17 +144,19 @@
     <p>{#each data.contacts[0].adresses as adress, i}{#if i > 0}{@html ', '}{/if}<a class="underline" target="_blank" href={adress.adressGoogleMaps}>{adress.adressName}</a>{/each}</p>
     <p>P. IVA {data.contacts[0].vat}</p>
   </div>
+  <hr class="flex-break mobile-only">
   <div>
     <a class="underline" href="#newsletter" onclick={openNewsletter}>Newsletter</a>
   </div>
   <div>
-    <p>Seguici su</p>
+    <p class="desktop-only">Seguici su</p>
     {#each data.contacts[0].socials as social, i}
       <a class="social-link" target="_blank" href={social}>
         {#if formatSocial(social)[0] === 'instagram'}
-          <svg class="ig-icon" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <svg class="ig-icon desktop-only" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
             <path d="M15.04 0H4.98C2.25-.02 0 2.23 0 4.97v10.07A4.96 4.96 0 0 0 4.96 20h10.08A4.96 4.96 0 0 0 20 15.04V4.97C20 2.23 17.78 0 15.04 0ZM10 15.18c-2.87 0-5.18-2.32-5.18-5.19S7.13 4.8 10 4.8s5.18 2.31 5.18 5.19-2.31 5.19-5.18 5.19Zm4.18-5.19c0 2.32-1.86 4.19-4.18 4.19s-4.18-1.87-4.18-4.19S7.68 5.8 10 5.8s4.18 1.87 4.18 4.19Z"/>
           </svg>
+          <p class="mobile-only underline">Instagram</p>
         {/if}
         {#if formatSocial(social)[0] === 'x'}
           <p>X</p>
@@ -204,6 +215,7 @@ header {
   padding: var(--margin);
   z-index: 2;
   transition: var(--transition);
+  transition-property: transform;
   border-bottom: solid 1px var(--black);
 }
 header.up {
@@ -219,6 +231,10 @@ header.up {
   padding: 0;
   margin: 0;
   gap: calc(var(--gutter)*6);
+  font-size: 1.1428rem;
+}
+.menu-item {
+  width: fit-content;
 }
 .menu-item>a {
   color: var(--black);
@@ -232,7 +248,7 @@ header.up {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    height: 62px;
+    height: auto;
     padding: 0;
     padding-left: var(--margin);
   }
@@ -241,14 +257,47 @@ header.up {
     margin: 16px 0;
   }
   #menuSwitch {
-    position: fixed;
-    top: var(--margin);
+    position: absolute;
+    top: 21px;
     right: var(--margin);
+    width: 24px;
+    height: 18px;
+    cursor: pointer;
+  }
+  .line {
+    width: 100%;
+    height: 1.5px;
+    border-radius: 2px;
+    background-color: var(--black);
+    position: absolute;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+  .line:nth-child(1) {top: 0;}
+  .line:nth-child(2) {top: 50%;}
+  .line:nth-child(3) {top: 100%;}
+  #menuSwitch.crossed .line:nth-child(1) {
+    transform: rotate(45deg);
+    top: 50%;
+  }
+
+  #menuSwitch.crossed .line:nth-child(2) {
+    transform: scaleX(0);
+  }
+
+  #menuSwitch.crossed .line:nth-child(3) {
+    transform: rotate(-45deg);
+    top: 50%;
   }
   #menu {
     flex-direction: column;
     margin-top: calc(var(--margin)*4);
     margin-bottom: calc(var(--margin)*4);
+  }
+  nav {
+    max-height: 0;
+    overflow: hidden;
+    transition: var(--transition);
   }
 }
 
@@ -267,6 +316,10 @@ footer {
   justify-content: space-between;
   border-top: solid 1px var(--black);
   margin-top: calc(var(--margin)*10);
+  row-gap: var(--margin);
+}
+footer .flex-break {
+  display: none;
 }
 footer>div:nth-child(1) {
   margin-right: 100px;
@@ -274,10 +327,10 @@ footer>div:nth-child(1) {
 footer>div:nth-child(2) {
   margin-right: auto;
 }
-footer>div:nth-child(3) {
+footer>div:nth-child(4) {
   margin-left: auto;
 }
-footer>div:nth-child(4) {
+footer>div:nth-child(5) {
   margin-left: 100px;
 }
 footer>div:nth-child(n+3) {
@@ -294,8 +347,34 @@ footer a:hover {
   margin-top: 0.3125rem;
 }
 @media screen and (max-width: 900px) {
+  main {
+    margin-top: 62px;
+  }
   footer {
-    flex-direction: column;
+    padding: calc(var(--margin)*2) var(--margin) calc(var(--margin)*4);
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  footer>div:nth-child(1) {
+    margin-right: 40px;
+  }
+  footer>div:nth-child(4) {
+    margin-left: unset;
+  }
+  footer>div:nth-child(5) {
+    margin-left: 40px;
+  }
+  footer>div:nth-child(n+3) {
+    text-align: left;
+  }
+}
+@media screen and (max-width: 600px) {
+  footer .flex-break {
+    display: block;
+    flex-basis: 100%;
+    width: 0;
+    height: 0;
+    border: none;
   }
 }
 

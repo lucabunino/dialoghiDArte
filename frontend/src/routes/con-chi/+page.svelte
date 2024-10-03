@@ -8,7 +8,7 @@
   <div class="con-chi-container grid">
     {#each data.people as person, i}
     <div class="person">
-      <img class="thumbnail square" src={person.thumbnail ? urlFor(person.thumbnail.asset) : ''} alt="">
+      <img class="thumbnail square" src={person.thumbnail ? urlFor(person.thumbnail.asset).width(900) : ''} alt="">
       <h3 class="person-title text-m">{person.title}</h3>
       <p class="person-role uppercase">{person.role}</p>
     </div>

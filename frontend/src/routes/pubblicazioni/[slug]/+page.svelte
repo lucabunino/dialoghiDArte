@@ -6,10 +6,14 @@
   import PortableTextStyle from '$lib/components/portableTextStyle.svelte';
   import { pushState } from '$app/navigation';
 
+  let innerWidth = $state()
+
   function openNewsletter() {
     pushState('', { showNewsletter: true }, '#newsletter');
   }
 </script>
+
+<svelte:window bind:innerWidth></svelte:window>
 
 <section class="single">
   <div class="navigator">
@@ -74,7 +78,7 @@
         <a href={data.publication[0].buyLink} target="_blank"><p class="buy underline active inverted">Dove acquistare →</p></a>
       {/if}
     </div>
-    <img class="img horizontal" src={urlFor(data.publication[0].image ? data.publication[0].image : data.publication[0].thumbnail)} alt="">
+    <img class="img horizontal" src={urlFor(data.publication[0].image ? data.publication[0].image : data.publication[0].thumbnail).width(innerWidth > 600 ? 1280 : 900)} alt="">
   </div>
 </section>
 
@@ -90,5 +94,10 @@ img {
 }
 .buy {
   margin-top: calc(var(--margin)*1.5);
+}
+@media screen and (max-width: 600px) {
+  .horizontal {
+    aspect-ratio: 4/5;
+  }
 }
 </style>

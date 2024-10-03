@@ -15,7 +15,8 @@
 {:else if style=== 'h4'}
   <h4><slot /></h4>
 {:else if value.href}
-  <a class="underline active inverted" href={value.href} target={value.blank ? '_blank' : undefined}>
+  <!-- <a class="underline active inverted" href={value.href} target={value.blank ? '_blank' : undefined}> -->
+  <a class="" href={value.href} target={value.blank ? '_blank' : undefined}>
     <slot />
   </a>
 {:else if value.listItem === 'bullet'}
@@ -25,6 +26,10 @@
 {/if}
 
 <style>
+a {
+  color: var(--blue);
+  text-decoration: underline;
+}
 p, ul {
   margin-bottom: 1em;
 }

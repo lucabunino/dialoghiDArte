@@ -41,10 +41,15 @@
   <div class="pubblicazioni-container grid">
     {#each data.publications as publication, i}
       <a class="publication" href="/pubblicazioni/{publication.slug.current}">
-        <img class="thumbnail" src={publication.thumbnail ? urlFor(publication.thumbnail.asset) : ''} alt="">
+        <img class="thumbnail" src={publication.thumbnail ? urlFor(publication.thumbnail.asset).width(900) : ''} alt="">
+        {#if publication.series}
+          <div class="tags">
+            <button class="btn tag pointer-events-none">{publication.series.title}</button>
+          </div> 
+        {/if}
         <h3 class="publication-title text-m">{publication.title}</h3>
         <p class="uppercase block">#Publicazioni</p>
-        <p class="publication-curator uppercase block">A cura di {publication.curator.title}</p>
+        {#if publication.curator}<p class="publication-curator uppercase block">A cura di {publication.curator.title}</p>{/if}
       </a>
     {/each}
   </div>
