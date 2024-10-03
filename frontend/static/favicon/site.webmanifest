@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Dialoghi d'Arte",
+    "short_name": "Dialoghi d'Arte",
     "icons": [
         {
             "src": "/favicon/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#0000ff",
-    "background_color": "#0000ff",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
     "display": "standalone"
 }
