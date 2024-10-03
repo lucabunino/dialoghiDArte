@@ -1,6 +1,5 @@
 <script>
   const { data } = $props()
-  $inspect(data)
 
   import { urlFor } from '$lib/utils/image';
   import { PortableText } from '@portabletext/svelte'
@@ -25,6 +24,23 @@
       <div class="body">
         <PortableText
         value={data.person[0].body}
+        components={{
+          block: {
+            normal: PortableTextStyle,
+            h2: PortableTextStyle,
+            h3: PortableTextStyle,
+            h4: PortableTextStyle,
+            h5: PortableTextStyle,
+            h6: PortableTextStyle,
+          },
+          list: {
+            bullet: PortableTextStyle,
+            number: PortableTextStyle,
+          },
+          marks: {
+            link: PortableTextStyle,
+          },
+        }}
         />
       </div>
     </div>

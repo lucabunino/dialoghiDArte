@@ -287,6 +287,18 @@ a:-webkit-any-link {
     background-color: inherit;
     color: inherit;
   }
+  .underline:hover,
+  .underline.menu-item:hover *,
+  .item:hover>h3,
+  .publication:hover>h3,
+  .publication:hover>p {
+    color: inherit;
+  }
+  .underline:hover::after,
+  .item:hover>h3::after,
+  .publication:hover>h3::after {
+    transform: scaleX(0);
+  }
 }
 
 /* Single pages */
@@ -379,6 +391,7 @@ section.list>.grid {
   }
   section.list>.grid {
     padding-top: calc(var(--margin)*4);
+    grid-template-columns: repeat(2, 1fr);
   }
   section.single {
     margin-top: calc(var(--margin)*4);

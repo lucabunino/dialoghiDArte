@@ -1,6 +1,6 @@
 <script>
   const { data } = $props()
-  $inspect(data)
+  
   import { urlFor } from '$lib/utils/image';
   import { PortableText } from '@portabletext/svelte'
   import PortableTextStyle from '$lib/components/portableTextStyle.svelte';

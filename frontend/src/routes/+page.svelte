@@ -222,6 +222,7 @@ h2 {
 /* Hero */
 #hero {
   height: calc(100vh - (2.5rem + var(--margin)*2));
+  height: calc(100svh - (2.5rem + var(--margin)*2));
 }
 .hero-fg-container {
   width: 40%;
@@ -232,6 +233,7 @@ h2 {
   width: 100%;
   height: 100%;
   background-size: cover;
+  background-position: center;
   align-items: center;
   justify-content: center;
   display: flex;
