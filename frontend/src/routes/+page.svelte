@@ -75,21 +75,21 @@
     mousewheel-sensitivity={1}
     mousewheel-release-on-edges={true}
     breakpoints={{
-      1900: {
+      '1900': {
         slidesPerView: 6.5,
       },
-      1600: {
+      '1600': {
         slidesPerView: 5.5,
       },
-      1200: {
+      '1200': {
         slidesPerView: 4.5,
       },
-      900: {
+      '900': {
         slidesPerView: 3.5,
         slidesOffsetBefore: 20,
         slidesOffsetAfter: 20,
       },
-      600: {
+      '600': {
         slidesPerView: 2.5,
       },
     }}
