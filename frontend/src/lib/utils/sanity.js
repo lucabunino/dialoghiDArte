@@ -52,7 +52,7 @@ export async function getWhatWeDosHomepage() {
 		*[_type == "whatWeDo" && collector == "whatWeDo" && !(_id in path('drafts.**'))] {
 			...,
 			category[]-> { title, slug },
-		} | order(date desc)[0...7]
+		} | order(date desc)[0...11]
 	`);
 }
 
@@ -62,7 +62,7 @@ export async function getArchiveHomepage() {
 		*[_type == "whatWeDo" && collector == "archive" && !(_id in path('drafts.**'))] {
 			...,
 			category[]-> { title, slug },
-		} | order(date desc)[0...7]
+		} | order(date desc)[0...11]
 	`);
 }
 
@@ -72,7 +72,7 @@ export async function getPublicationsHomepage() {
 	*[_type == "homepage"][0].series[]-> {
       title,
       description,
-      "publications": *[_type == "publication" && references(^._id)] | order(_createdAt desc)[0...3] {
+      "publications": *[_type == "publication" && references(^._id)] | order(_createdAt desc)[0...5] {
         title,
         slug,
         curator-> { "title": name + " " + surname, },
@@ -89,7 +89,7 @@ export async function getPeopleHomepage() {
 		*[_type == "person" && withWhom && !(_id in path('drafts.**'))] {
 			...,
 			"title": name + " " + surname,
-		} | order(surname asc)[0...9]
+		} | order(surname asc)[0...11]
 	`);
 }
 

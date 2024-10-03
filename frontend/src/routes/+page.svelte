@@ -224,7 +224,6 @@ h2 {
   }
 }
 
-
 /* Hero */
 #hero {
   height: calc(100vh - (2.5rem + var(--margin)*2));
@@ -335,6 +334,9 @@ h2 {
 .archivio-container {
 
 }
+
+
+
 @media screen and (max-width: 900px) {
   .publications-titles {
     display: none;
