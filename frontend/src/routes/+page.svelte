@@ -213,6 +213,12 @@ h2 {
   margin-top: calc(var(--margin)*3);
 }
 @media screen and (max-width: 900px) {
+  section:not(:nth-child(-n+2)) {
+    padding-top: 62px;
+  }
+  h2 {
+    padding-top: calc(var(--margin)*4);
+  }
   .cta {
     margin-top: calc(var(--margin)*4.5);
   }
