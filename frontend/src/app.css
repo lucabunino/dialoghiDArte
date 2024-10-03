@@ -283,7 +283,8 @@ a:-webkit-any-link {
   .grid {
     grid-template-columns: repeat(1, 1fr);
   }
-  .btn:hover {
+  .headings>.tags>.tag:hover {
+    border-color: inherit;
     background-color: inherit;
     color: inherit;
   }
