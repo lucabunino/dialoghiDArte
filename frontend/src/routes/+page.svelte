@@ -233,9 +233,9 @@ h2 {
   height: calc(100svh - (2.5rem + var(--margin)*2));
 }
 .hero-fg-container {
-  width: 40%;
-  height: 40%;
-  max-width: 400px;
+  width: 45%;
+  height: 45%;
+  /* max-width: 400px; */
 }
 .hero-bg {
   width: 100%;
