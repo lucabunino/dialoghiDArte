@@ -1,4 +1,4 @@
-import { UserIcon, DownloadIcon, EnvelopeIcon, TextIcon } from '@sanity/icons'
+import { UserIcon, UsersIcon, DownloadIcon, EnvelopeIcon, TextIcon } from '@sanity/icons'
 
 export default {
   name: 'homepage',
@@ -99,6 +99,17 @@ export default {
               };
             }
           }
+        },
+        {
+          name: 'aboutPeople',
+          title: 'Gruppo di persone',
+          type: 'object',
+          icon: UsersIcon,
+          fields: [
+            {name: 'title', title: 'Titolo', type: 'string'},
+            {name: 'content', title: 'Contenuto', type: 'text', rows: 5,},
+            {name: 'people', title: 'Persone', type: 'array', of: [{name: 'person', title: 'Persona', type: 'reference', to: [{type: 'person'}]},]},
+          ]
         },
         {
           name: 'aboutDownload',

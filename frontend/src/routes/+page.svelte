@@ -1,5 +1,6 @@
 <script>
   const { data } = $props()
+
   import { urlFor } from '$lib/utils/image';
   import { register } from 'swiper/element/bundle';
   register();
@@ -10,7 +11,22 @@
   let visible = $state(false)
   
   onMount(() => {
+    const swiperEl1 = document.querySelector('.hero-fg-container');
+    swiperEl1.initialize();
     visible=true
+    const swiperEl2 = document.querySelector('.con-chi-container');
+    const swiperParams2 = {
+      breakpoints: {
+        1900: {slidesPerView: 7.3,},
+        1600: {slidesPerView: 6.3,},
+        1200: {slidesPerView: 5.3,},
+        900: {slidesPerView: 4.3, slidesOffsetBefore: 20, slidesOffsetAfter: 20,},
+        750: {slidesPerView: 3.3,},
+        600: {slidesPerView: 2.4,},
+      },
+    };
+    Object.assign(swiperEl2, swiperParams2);
+    swiperEl2.initialize();
   });
 
   function openNewsletter() {
@@ -23,9 +39,10 @@
 <section id="hero">
   <div class="hero-bg" style="background-image: url({urlFor(data.imageBackground.asset).width(innerWidth > 900 ? 2560 : 1280)})">
     <swiper-container class="hero-fg-container"
+    init="false"
     autoplay-delay=4000
     speed="500"
-    loop="true"
+    loop={true}
     navigation-next-el=".hero-bg"
     >
       {#each data.homepage[0].imagesForeground as imageForeground, i}
@@ -60,6 +77,7 @@
 <section id="con-chi" title="Con chi">
   <h2 class="con-chi-title text-xl">Con chi</h2>
     <swiper-container class="con-chi-container"
+    init="false"
     slides-per-view={1.5}
     space-between={10}
     speed={500}
@@ -74,28 +92,6 @@
     mousewheel-force-to-axis={true}
     mousewheel-sensitivity={1}
     mousewheel-release-on-edges={true}
-    breakpoints={{
-      '1900': {
-        slidesPerView: 7.3,
-      },
-      '1600': {
-        slidesPerView: 6.3,
-      },
-      '1200': {
-        slidesPerView: 5.3,
-      },
-      '900': {
-        slidesPerView: 4.3,
-        slidesOffsetBefore: 20,
-        slidesOffsetAfter: 20,
-      },
-      '750': {
-        slidesPerView: 3.3,
-      },
-      '600': {
-        slidesPerView: 2.4,
-      },
-    }}
     >
       {#each data.people as person, i}
         <swiper-slide class="person" class:hidden={!visible}>
@@ -139,18 +135,35 @@
   <p class="chi-siamo-intro">{data.homepage[0].aboutIntro}</p>
   <div class="chi-siamo-container">
     <div class="chi-siamo-people chi-siamo-column">
-      {#each data.homepage[0].aboutContent.filter(content => content._type === 'aboutPerson') as aboutContent, i}
+      {#each data.homepage[0].aboutContent.filter(content => content._type === 'aboutPerson' || content._type === 'aboutPeople') as aboutContent, i}
         <div class="chi-siamo-item">
-          {#if aboutContent.person.singlePage}
-            <a href="/chi-siamo/{aboutContent.person.slug.current}">
-              <h4 class="underline chi-siamo-title text-m">{aboutContent.person.title} →</h4>
-            </a>
-          {:else}
-              <h4 class="chi-siamo-title text-m">{aboutContent.person.title}</h4>
+          {#if aboutContent._type === 'aboutPerson'}
+            {#if aboutContent.person.singlePage}
+              <a href="/chi-siamo/{aboutContent.person.slug.current}">
+                <h4 class="underline chi-siamo-title text-m">{aboutContent.person.title} →</h4>
+              </a>
+            {:else}
+                <h4 class="chi-siamo-title text-m">{aboutContent.person.title}</h4>
+            {/if}
+            {#if aboutContent.person.role}<p class="uppercase">{aboutContent.person.role}</p>{/if}
+            {#if aboutContent.person.email}<a href="mailto:{aboutContent.person.email}"><p class="underline">{aboutContent.person.email}</p></a>{/if}
+            {#if aboutContent.extra}<p>{aboutContent.extra}</p>{/if}
           {/if}
-          {#if aboutContent.person.role}<p class="uppercase">{aboutContent.person.role}</p>{/if}
-          {#if aboutContent.person.email}<a href="mailto:{aboutContent.person.email}"><p class="underline">{aboutContent.person.email}</p></a>{/if}
-          {#if aboutContent.extra}<p>{aboutContent.extra}</p>{/if}
+          {#if aboutContent._type === 'aboutPeople'}
+            <h4 class="chi-siamo-title text-m">{aboutContent.title}</h4>
+            {#if aboutContent.content}<p>{aboutContent.content}</p>{/if}
+            {#if aboutContent.people}
+              {#each aboutContent.people as person, j}
+                {#if person.singlePage}
+                <a class="block" href="/chi-siamo/{person.slug.current}">
+                  <p class="underline">{person.title} →</p>
+                </a>
+                {:else}
+                    <p class="">{person.title}</p>
+                {/if}
+              {/each}
+            {/if}
+          {/if}
         </div>
       {/each}
     </div>
@@ -173,6 +186,17 @@
         {#each data.homepage[0].aboutContent.filter(content => content._type === 'aboutCustom') as aboutContent, i}
           <h4 class="chi-siamo-title text-m">{aboutContent.title}</h4>
           {#if aboutContent.content}<p>{aboutContent.content}</p>{/if}
+          {#if aboutContent.entities}
+            {#each aboutContent.entities as entity, j}
+              {#if entity.link}
+                <a class="block" target="_blank" href={entity.link}>
+                  <p class="underline">{entity.title}</p>
+                </a>
+              {:else}
+                <p>{entity.title}</p>
+              {/if}
+            {/each}
+          {/if}
         {/each}
       </div>
     </div>

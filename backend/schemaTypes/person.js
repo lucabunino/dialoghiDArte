@@ -30,7 +30,7 @@ export default {
       type: 'slug',
       validation: (Rule) => Rule.required(),
       options: {
-        source: 'title',
+        source: (doc) => `${doc.name}-${doc.surname}`,
         maxLength: 96,
       },
     },

@@ -40,6 +40,8 @@ export async function getHomepage() {
 			aboutContent[] {
 				...,
 				person-> { "title": name + " " + surname, slug, role, email, singlePage  },
+				entities[]-> { title, link, slug },
+				people[]-> { "title": name + " " + surname, singlePage, slug },
 				"link": download.asset->url
 			}
 		}
