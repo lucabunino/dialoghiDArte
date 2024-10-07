@@ -128,7 +128,8 @@ export default {
           icon: TextIcon,
           fields: [
             {name: 'title', title: 'Titolo', type: 'string'},
-            {name: 'content', title: 'Contenuto', type: 'text'}
+            {name: 'content', title: 'Contenuto', type: 'text', rows: 5,},
+            {name: 'entities', title: 'Entità', type: 'array', of: [{name: 'entity', title: 'Entità', type: 'reference', to: [{type: 'entity'}]},]},
           ]
         },
       ],
