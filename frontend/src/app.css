@@ -86,6 +86,11 @@ a:-webkit-any-link {
   cursor: pointer;
   text-decoration: none;
 }
+a:any-link {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
 
 /* Common classes */
 .text-xl {
