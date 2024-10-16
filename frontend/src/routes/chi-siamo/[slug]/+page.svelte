@@ -12,7 +12,7 @@
 
 <section class="single">
   <div class="navigator">
-    <a class="prev underline" href="/#chi-siamo">← Indietro</a>
+    <a class="prev underline" href="/#chi-siamo" data-sveltekit-noscroll>← Indietro</a>
   </div>
   <div class="headings">
     <div class="titles">

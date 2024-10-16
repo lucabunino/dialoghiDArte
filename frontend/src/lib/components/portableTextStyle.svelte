@@ -30,6 +30,9 @@ a {
   color: var(--blue);
   text-decoration: underline;
 }
+a:hover {
+  text-decoration: none;
+}
 p, ul {
   margin-bottom: 1em;
 }

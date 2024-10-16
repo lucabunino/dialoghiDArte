@@ -12,8 +12,16 @@
 
 <section class="single">
   <div class="navigator">
-    {#if data.archive[0].prev}<a class="prev underline" href="/archivio/{data.archive[0].prev.slug.current}">← Precedente</a>{/if}
-    {#if data.archive[0].next}<a class="next underline" href="/archivio/{data.archive[0].next.slug.current}">Successivo →</a>{/if}
+    {#if data.archive[0].prev}
+      <a class="prev underline" href="/archivio/{data.archive[0].prev.slug.current}">← Precedente</a>
+    {:else}
+      <p class="prev not-active">← Precedente</p>
+    {/if}
+    {#if data.archive[0].next}
+      <a class="next underline" href="/archivio/{data.archive[0].next.slug.current}">Successivo →</a>
+    {:else}
+      <p class="prev not-active">Successivo →</p>
+    {/if}
   </div>
   <div class="headings">
     <div class="titles">

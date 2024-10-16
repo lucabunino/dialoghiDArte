@@ -12,8 +12,16 @@
 
 <section class="single">
   <div class="navigator">
-    {#if data.whatWeDo[0].prev}<a class="prev underline" href="/cosa-facciamo/{data.whatWeDo[0].prev.slug.current}">← Precedente</a>{/if}
-    {#if data.whatWeDo[0].next}<a class="next underline" href="/cosa-facciamo/{data.whatWeDo[0].next.slug.current}">Successivo →</a>{/if}
+    {#if data.whatWeDo[0].prev}
+      <a class="prev underline" href="/cosa-facciamo/{data.whatWeDo[0].prev.slug.current}">← Precedente</a>
+    {:else}
+      <p class="prev not-active">← Precedente</p>
+    {/if}
+    {#if data.whatWeDo[0].next}
+      <a class="next underline" href="/cosa-facciamo/{data.whatWeDo[0].next.slug.current}">Successivo →</a>
+    {:else}
+      <p class="prev not-active">Successivo →</p>
+    {/if}
   </div>
   <div class="headings">
     <div class="titles">
@@ -57,7 +65,7 @@
               <p class="credit">Partners</p>
               {#each credit.partnersArray as partner, k}
                 {#if partner.link}
-                  <a target="_blank" href={partner.link}><p class="underline">{partner.title}</p></a><br>
+                  <a target="_blank" href={partner.link}><p class="underline">{partner.title} ↗</p></a><br>
                 {:else}
                   <p>{partner?.title}</p>
                 {/if}
@@ -66,7 +74,7 @@
               <p class="credit">Sponsors</p>
               {#each credit.sponsorsArray as sponsor, k}
                 {#if sponsor.link}
-                  <a target="_blank" href={sponsor.link}><p class="underline">{sponsor.title}</p></a><br>
+                  <a target="_blank" href={sponsor.link}><p class="underline">{sponsor.title} ↗</p></a><br>
                 {:else}
                   <p>{sponsor?.title}</p>
                 {/if}
@@ -75,7 +83,7 @@
               <p class="credit">Con il patrocinio di:</p>
               {#each credit.patronagesArray as patronage, k}
                 {#if patronage.link}
-                  <a target="_blank" href={patronage.link}><p class="underline">{patronage.title}</p></a><br>
+                  <a target="_blank" href={patronage.link}><p class="underline">{patronage.title} ↗</p></a><br>
                 {:else}
                   <p>{patronage?.title}</p>
                 {/if}
@@ -84,7 +92,7 @@
               <p class="credit">{credit.customText}</p>
               {#each credit.customsArray as custom, k}
                 {#if custom.link}
-                  <a target="_blank" href={custom.link}><p class="underline">{custom.title}</p></a><br>
+                  <a target="_blank" href={custom.link}><p class="underline">{custom.title} ↗</p></a><br>
                 {:else}
                   <p>{custom?.title}</p>
                 {/if}

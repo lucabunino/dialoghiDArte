@@ -9,7 +9,13 @@
     {#each data.people as person, i}
     <div class="person">
       <img class="thumbnail square" src={person.thumbnail ? urlFor(person.thumbnail.asset).width(900) : ''} alt="">
-      <h3 class="person-title text-m">{person.title}</h3>
+      <h3 class="person-title text-m">
+        {#if person.externalLink}
+          <a href={person.externalLink} target="_blank" class="underline">{person.title} ↗</a>
+        {:else}
+          {person.title}
+        {/if}
+      </h3>
       <p class="person-role uppercase">{person.role}</p>
     </div>
     {/each}

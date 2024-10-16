@@ -40,8 +40,8 @@
   <div class="hero-bg" style="background-image: url({urlFor(data.imageBackground.asset).width(innerWidth > 900 ? 2560 : 1280)})">
     <swiper-container class="hero-fg-container"
     init="false"
-    autoplay-delay=4000
-    speed="500"
+    autoplay-delay={4000}
+    speed={500}
     loop={true}
     navigation-next-el=".hero-bg"
     >
@@ -63,7 +63,6 @@
       <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset).width(900) : ''} alt="">
       <div class="tags">
         {#each item.category as category}
-          <!-- <a href="/cosa-facciamo?category={category.slug.current}" class="btn tag">{category.title}</a> -->
           <button class="btn tag pointer-events-none">{category.title}</button>
         {/each}
       </div>
@@ -80,7 +79,7 @@
     init="false"
     slides-per-view={1.5}
     space-between={10}
-    speed={500}
+    speed={700}
     slides-offset-before={10}
     slides-offset-after={10}
     freeMode={{
@@ -96,7 +95,13 @@
       {#each data.people as person, i}
         <swiper-slide class="person" class:hidden={!visible}>
           <img class="thumbnail" src={person.thumbnail ? urlFor(person.thumbnail.asset).width(900) : ''} alt="">
-          <h3 class="person-title text-m">{person.title}</h3>
+          <h3 class="person-title text-m">
+            {#if person.externalLink}
+              <a href={person.externalLink} target="_blank" class="underline">{person.title} ↗</a>
+            {:else}
+              {person.title}
+            {/if}
+          </h3>
           {#if person.role}<p class="person-role uppercase">{person.role}</p>{/if}
         </swiper-slide>
       {/each}
@@ -146,7 +151,7 @@
                 <h4 class="chi-siamo-title text-m">{aboutContent.person.title}</h4>
             {/if}
             {#if aboutContent.person.role}<p class="uppercase">{aboutContent.person.role}</p>{/if}
-            {#if aboutContent.person.email}<a href="mailto:{aboutContent.person.email}"><p class="underline">{aboutContent.person.email}</p></a>{/if}
+            {#if aboutContent.person.email}<a href="mailto:{aboutContent.person.email}"><p class="underline active inverted">{aboutContent.person.email}</p></a>{/if}
             {#if aboutContent.extra}<p>{aboutContent.extra}</p>{/if}
           {/if}
           {#if aboutContent._type === 'aboutPeople'}
@@ -172,7 +177,7 @@
         <div class="chi-siamo-item">
           {#if aboutContent._type === 'aboutContact'}
             <h4 class="chi-siamo-title text-m">{aboutContent.title}</h4>
-            <a href="mailto:{aboutContent.email}"><p class="underline">{aboutContent.email}</p></a>
+            <a href="mailto:{aboutContent.email}"><p class="underline active inverted">{aboutContent.email}</p></a>
           {/if}
           {#if aboutContent._type === 'aboutDownload'}
             <h4 class="chi-siamo-title text-m">{aboutContent.title}</h4>
@@ -190,7 +195,7 @@
             {#each aboutContent.entities as entity, j}
               {#if entity.link}
                 <a class="block" target="_blank" href={entity.link}>
-                  <p class="underline">{entity.title}</p>
+                  <p class="underline">{entity.title} ↗</p>
                 </a>
               {:else}
                 <p>{entity.title}</p>
@@ -259,6 +264,7 @@ h2 {
 .hero-fg-container {
   width: 45%;
   height: 45%;
+  margin-bottom: 5vw;
   /* max-width: 400px; */
 }
 .hero-bg {
@@ -363,8 +369,6 @@ h2 {
 
 }
 
-
-
 @media screen and (max-width: 900px) {
   .publications-titles {
     display: none;
@@ -375,9 +379,12 @@ h2 {
   .con-chi-container {
     width: -webkit-fill-available;
   }
-  
+  .chi-siamo-container {
+    line-height: 1.3;
+  }
   .chi-siamo-intro {
     width: 100%;
+    line-height: 1.3;
   }
   .chi-siamo-column {
     gap: calc(var(--margin)*3);

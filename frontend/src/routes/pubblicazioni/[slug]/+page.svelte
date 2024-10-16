@@ -17,8 +17,16 @@
 
 <section class="single">
   <div class="navigator">
-    {#if data.publication[0].prev}<a class="prev underline" href="/pubblicazioni/{data.publication[0].prev.slug.current}">← Precedente</a>{/if}
-    {#if data.publication[0].next}<a class="next underline" href="/pubblicazioni/{data.publication[0].next.slug.current}">Successivo →</a>{/if}
+    {#if data.publication[0].prev}
+      <a class="prev underline" href="/pubblicazioni/{data.publication[0].prev.slug.current}">← Precedente</a>
+    {:else}
+      <p class="prev not-active">← Precedente</p>
+    {/if}
+    {#if data.publication[0].next}
+      <a class="next underline" href="/pubblicazioni/{data.publication[0].next.slug.current}">Successivo →</a>
+    {:else}
+      <p class="next not-active">Successivo →</p>
+    {/if}
   </div>
   <div class="headings">
     <div class="titles">

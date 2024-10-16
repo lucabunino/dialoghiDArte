@@ -24,12 +24,16 @@
   let menuHeight = $state()
 
   afterNavigate (() => {
-    if ($page.url.hash) {
+    if ($page.url.hash && $page.url.hash !== '#newsletter') {
       headerFixed = true
       const element = document.querySelector($page.url.hash + '>h2');
       if (element) {
-        const targetPosition = element.getBoundingClientRect().top + scrollY - (innerWidth > 900 ? headerHeight + 40 : 62);
-        window.scrollTo({ top: targetPosition });
+        window.scrollTo({top: 0})
+        setTimeout(() => {
+          const targetPosition = element.getBoundingClientRect().top + scrollY - (innerWidth > 900 ? headerHeight + 40 : 62);
+          console.log($page.url.hash, element, element.getBoundingClientRect().top, targetPosition);
+          smoothScrollTo(targetPosition);
+        }, 300);
       }
     }
   });
@@ -69,6 +73,33 @@
   function closeNewsletter() { 
     replaceState('', '', $page.url.pathname);
   }
+  function handleLogoClick() {
+    if ($page.url.pathname == '/') {
+      smoothScrollTo(0)
+    }
+  }
+
+  function smoothScrollTo(targetPosition) {
+    const start = window.scrollY;
+    const distance = targetPosition - start;
+    const duration = 700;
+    const startTime = performance.now();
+
+    function animateScroll(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      const easeInOutQuad = progress < 0.5
+        ? 2 * progress * progress
+        : -1 + (4 - 2 * progress) * progress;
+
+      window.scrollTo(0, start + distance * easeInOutQuad);
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      }
+    }
+    requestAnimationFrame(animateScroll);
+  }
 
   // Grid (not needed in production)
   let viewGrid = $state(false)
@@ -103,7 +134,7 @@
 {/if}
 
 <header class:up={scrolledDown} class:down={showMenu}>
-  <a class="menu-item" onclick={(e) => {showMenu = false}} href="/" bind:clientHeight={headerHeight}>
+  <a class="menu-item" onclick={(e) => {showMenu = false; handleLogoClick()}} href="/" bind:clientHeight={headerHeight}>
     <svg id="logo" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 45">
       <path d="M70.94 28.51c0-6.5-4.21-10.18-8.79-10.18s-8.97 3.49-8.97 10.24 4.45 10.36 8.91 10.36 8.85-3.86 8.85-10.42Zm-26.54 0c0-10.06 7.81-16.25 16.11-16.25 4.82 0 8.36 2.08 10.07 3.99h.24V0h8.79v44.14h-8.05l-.61-3.56h-.3c-1.4 1.65-5.31 4.41-10.62 4.41-8.24 0-15.62-6.68-15.62-16.49Zm62.24-19.19h.24l6.65 17.41H99.99l6.65-17.41ZM101.82 0 83.58 44.14h9.94l3.97-10.12h18.48L120 44.14h10L111.7 0h-9.88ZM16.71 37.09c8.05 0 15.98-2.21 15.98-14.53S24.76 7.05 16.71 7.05h-7.5v30.04h7.5ZM0 0h18.3c12.87 0 23.61 7.23 23.61 22.56s-10.74 21.58-23.3 21.58H0V0Zm84.89 15.08c4.15-.8 5.06-2.82 5.06-4.29 0-1.78-1.4-2.21-2.93-2.45-1.52-.24-3.29-1.47-3.29-4.05 0-2.21 1.71-3.86 4.09-3.86 2.99 0 5.43 2.7 5.43 7.05 0 5.83-3.9 8.64-8.17 9.2l-.18-1.59Z"/>
     </svg>
@@ -180,6 +211,7 @@
     <div class="cross-line"></div>
   </button>
   <div class="newsletter-intro text-l">
+    <p style="margin-bottom: 1em;">Ci occupiamo di partecipazione culturale per far crescere il capitale culturale delle persone.</p>
     <p>Iscriviti alla nostra Newsletter.</p>
     <p>Condivideremo storie, progetti e opportunità che trasformano luoghi e persone attraverso la cultura.</p>
   </div>
@@ -277,11 +309,9 @@ header.up {
     transform: rotate(45deg);
     top: 50%;
   }
-
   #menuSwitch.crossed .line:nth-child(2) {
     transform: scaleX(0);
   }
-
   #menuSwitch.crossed .line:nth-child(3) {
     transform: rotate(-45deg);
     top: 50%;
@@ -295,6 +325,9 @@ header.up {
     max-height: 0;
     overflow: hidden;
     transition: var(--transition);
+  }
+  .menu-item:hover>#logo {
+    fill: unset;
   }
 }
 
@@ -416,7 +449,8 @@ footer a:hover {
 }
 .cross-line {
   width: 30px;
-  height: 1px;
+  height: 1.5px;
+  border-radius: 2px;
   background-color: var(--black);
   position: absolute;
 }
@@ -430,7 +464,7 @@ footer a:hover {
   max-width: 800px;
 }
 .newsletter-form {
-  margin-top: calc(var(--margin)*3);
+  margin-top: calc(var(--margin)*2);
 }
 [type="email"], [type="text"] {
   border: solid 1px var(--black);
@@ -451,6 +485,11 @@ footer a:hover {
 }
 [type="submit"]:hover {
   color: var(--bg);
+}
+@media screen and (max-width: 900px) {
+  #newsletter {
+    padding: calc(var(--margin)*5) calc(var(--margin)*2.5);
+  }
 }
 @media screen and (max-width: 600px) {
   #newsletter-bg {

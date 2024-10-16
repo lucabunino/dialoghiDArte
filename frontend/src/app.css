@@ -81,7 +81,8 @@ input, button, textarea, select {
 #root, #__next {
   isolation: isolate;
 }
-a:-webkit-any-link {
+a:-webkit-any-link,
+button {
   color: inherit;
   cursor: pointer;
   text-decoration: none;
@@ -138,20 +139,22 @@ a:any-link {
   display: inline-block;
   position: relative;
   cursor: pointer;
-  transition: var(--transition);
+  /* transition: var(--transition); */
 }
 
-.underline:hover,
-.underline.active,
-.underline.menu-item:hover *,
 .item:hover>h3,
-.publication:hover>h3,
+.publication:hover>h3 {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.underline:hover,
+.underline.menu-item:hover *,
 .publication:hover>p {
   color: var(--blue);
 }
-.underline::after,
-.item>h3::after,
-.publication>h3::after {
+.underline::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -165,20 +168,21 @@ a:any-link {
   transition-property: transform;
 }
 
+.underline.active:not(.menu-item):after {
+  background-color: var(--black);
+}
+
 .underline:hover::after,
 .underline.active::after,
-.menu-item.active.underline::after,
-.item:hover>h3::after,
-.publication:hover>h3::after {
+.menu-item.active.underline::after {
   transform: scaleX(1);
 }
 .underline:not(:hover):not(.active)::after,
-.underline.inverted:hover::after,
-.item:not(:hover)>h3::after,
-.publication:not(:hover)>h3::after {
+.underline.inverted:hover::after {
   transform: scaleX(0);
   transform-origin: right;
 }
+
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -232,6 +236,7 @@ a:any-link {
 .person>.thumbnail {
   width: 100%;
   aspect-ratio: 1;
+  filter: grayscale(1);
 }
 @media screen and (min-width: 1900px) {
   .grid {
@@ -315,12 +320,12 @@ a:any-link {
   .item:hover>h3,
   .publication:hover>h3,
   .publication:hover>p {
-    color: inherit;
+    /* color: inherit; */
   }
   .underline:hover::after,
   .item:hover>h3::after,
   .publication:hover>h3::after {
-    transform: scaleX(0);
+    /* transform: scaleX(0); */
   }
 }
 
@@ -340,6 +345,9 @@ section.single {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: calc(var(--margin)*2);
+}
+.not-active {
+  opacity: .3;
 }
 .next {
   margin-left: auto;
@@ -439,12 +447,16 @@ section.list>.grid {
     grid-template-columns: repeat(1, 1fr);
     margin-top: calc(var(--margin)*4);
     row-gap: calc(var(--margin)*3);
+    line-height: 1.3;
   }
   .content .img {
     order: -1
   }
   .content .text {
     width: 100%;
+  }
+  .credits {
+    line-height: 1.3;
   }
 }
 

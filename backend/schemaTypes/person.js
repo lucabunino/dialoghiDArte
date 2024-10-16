@@ -54,6 +54,12 @@ export default {
       fieldset: 'where',
     },
     {
+      name: 'externalLink',
+      title: 'Link esterno',
+      description: 'Se presente, sarà aggiunto un link esterno. Non funziona se il campo "Mostra in pagina singola" è attivo',
+      type: 'url',
+    },
+    {
       name: 'email',
       title: 'Email',
       type: 'string',
@@ -121,11 +127,13 @@ export default {
     select: {
       name: 'name',
       surname: 'surname',
+      media: 'thumbnail',
     },
     prepare(selection) {
-      const {name, surname} = selection;
+      const {name, surname, media} = selection;
       return {
         title: `${name} ${surname}`,
+        media: media
       };
     }
   }
