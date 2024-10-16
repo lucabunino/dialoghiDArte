@@ -215,6 +215,7 @@ a:any-link {
 .item, .publication {
   display: block;
   position: relative;
+  align-content: flex-start;
 }
 .item:hover .tag, .publication:hover .tag  {
   color: var(--bg);
@@ -242,7 +243,7 @@ a:any-link {
   .grid {
     grid-template-columns: repeat(6, 1fr);
   }
-  *:not(.list).grid>a:nth-child(n+7) {
+  .grid>a:nth-child(n+7) {
     display: inherit;
   }
 }
@@ -250,7 +251,7 @@ a:any-link {
   .grid {
     grid-template-columns: repeat(5, 1fr);
   }
-  *:not(.list).grid>a:nth-child(n+6) {
+  .grid>a:nth-child(n+6) {
     display: none;
   }
 }
@@ -258,7 +259,7 @@ a:any-link {
   .grid {
     grid-template-columns: repeat(4, 1fr);
   }
-  *:not(.list).grid>a:nth-child(n+5) {
+  .grid>a:nth-child(n+5) {
     display: none;
   }
 }
@@ -266,7 +267,7 @@ a:any-link {
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }
-  *:not(.list).grid>a:nth-child(n+4) {
+  .grid>a:nth-child(n+4) {
     display: none;
   }
 }
@@ -279,7 +280,7 @@ a:any-link {
     grid-template-columns: repeat(2, 1fr);
     row-gap: calc(var(--gutter)* 6);
   }
-  *:not(.list).grid>a:nth-child(n+3) {
+  .grid>a:nth-child(n+3) {
     display: none;
   }
   .text-xl {
@@ -307,7 +308,7 @@ a:any-link {
   .grid {
     grid-template-columns: repeat(1, 1fr);
   }
-  *:not(.list).grid>.publication:nth-child(n+2) {
+  .grid>.publication:nth-child(n+2) {
     display: none;
   }
   .headings>.tags>.tag:hover {
@@ -325,7 +326,7 @@ a:any-link {
   .underline:hover::after,
   .item:hover>h3::after,
   .publication:hover>h3::after {
-    /* transform: scaleX(0); */
+    transform: scaleX(0);
   }
 }
 
@@ -334,6 +335,9 @@ section.list {
   margin-top: calc(var(--margin)*3);
   margin-right: var(--margin);
   margin-left: var(--margin);
+}
+section.list .grid>a:nth-child(n) {
+  display: inherit;
 }
 section.single {
   margin-top: calc(var(--margin)*2);
@@ -412,6 +416,11 @@ section.list>.grid {
 }
 .horizontal {
   aspect-ratio: 5/4;
+}
+@media screen and (max-width: 1200px) {
+  .text {
+    width: 90%;
+  }
 }
 @media screen and (max-width: 900px) {
   section.list {

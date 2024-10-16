@@ -53,7 +53,7 @@ export async function getWhatWeDosHomepage() {
 	return await client.fetch(`
 		*[_type == "whatWeDo" && collector == "whatWeDo" && !(_id in path('drafts.**'))] {
 			...,
-			category[]-> { title, slug },
+			category[]-> { title, slug } | order(title asc),
 		} | order(date desc)[0...11]
 	`);
 }
@@ -63,7 +63,7 @@ export async function getArchiveHomepage() {
 	return await client.fetch(`
 		*[_type == "whatWeDo" && collector == "archive" && !(_id in path('drafts.**'))] {
 			...,
-			category[]-> { title, slug },
+			category[]-> { title, slug } | order(title asc),
 		} | order(date desc)[0...11]
 	`);
 }
@@ -112,8 +112,8 @@ export async function getWhatWeDos(category) {
 		${category && category !== '*' ? `&& $category in category[]->slug.current` : ''}
 		&& !(_id in path('drafts.**'))] {
 			...,
-			category[]-> { title, slug },
-		} | order(date asc)
+			category[]-> { title, slug } | order(title asc),
+		} | order(date desc)
 	`, { category });
 }
 
@@ -134,8 +134,8 @@ export async function getArchive(category) {
 		${category && category !== '*' ? `&& $category in category[]->slug.current` : ''}
 		&& !(_id in path('drafts.**'))] {
 			...,
-			category[]-> { title, slug },
-		} | order(date asc)
+			category[]-> { title, slug } | order(title asc),
+		} | order(date desc)
 	`, { category });
 }
 
@@ -159,7 +159,7 @@ export async function getPublications(series) {
 			series-> {title, slug },
 			curator -> { "title": name + " " + surname, },
 			editor -> { title, link },
-		} | order(series->title asc)
+		} | order(date desc)
 	`, { series });
 }
 

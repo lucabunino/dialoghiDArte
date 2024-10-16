@@ -94,7 +94,10 @@ export default {
                   {
                     name: 'href',
                     type: 'url',
-                    title: 'URL'
+                    title: 'URL',
+                    validation: Rule => Rule.uri({
+                      scheme: ['http', 'https', 'mailto', 'tel']
+                    })
                   },
                   {
                     title: 'Open in new tab',
@@ -247,6 +250,22 @@ export default {
         }
       ]
     },    
+  ],
+  orderings: [
+    {
+      title: 'Title',
+      name: 'titleAsc',
+      by: [
+        { field: 'title', direction: 'asc' },
+      ],
+    },
+    {
+      title: 'Date',
+      name: 'dateAsc',
+      by: [
+        { field: 'date', direction: 'desc' },
+      ],
+    },
   ],
   preview: {
     select: {

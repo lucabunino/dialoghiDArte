@@ -88,15 +88,17 @@
                   <p>{patronage?.title}</p>
                 {/if}
               {/each}
-            {:else if credit._type === 'customCredit' && credit.customsArray?.length}
+            {:else if credit._type === 'customCredit'}
               <p class="credit">{credit.customText}</p>
-              {#each credit.customsArray as custom, k}
-                {#if custom.link}
-                  <a target="_blank" href={custom.link}><p class="underline">{custom.title} ↗</p></a><br>
-                {:else}
-                  <p>{custom?.title}</p>
-                {/if}
-              {/each}
+              {#if credit.customsArray?.length}
+                {#each credit.customsArray as custom, k}
+                  {#if custom.link}
+                    <a target="_blank" href={custom.link}><p class="underline">{custom.title} ↗</p></a><br>
+                  {:else}
+                    <p>{custom?.title}</p>
+                  {/if}
+                {/each}
+              {/if}
             {/if}
           {/each}
         </div>

@@ -132,6 +132,22 @@ export default {
       fieldset: 'buy',
     },
   ],
+  orderings: [
+    {
+      title: 'Title',
+      name: 'titleAsc',
+      by: [
+        { field: 'title', direction: 'asc' },
+      ],
+    },
+    {
+      title: 'Date',
+      name: 'dateAsc',
+      by: [
+        { field: 'date', direction: 'desc' },
+      ],
+    },
+  ],
   preview: {
     select: {
       title: 'title',

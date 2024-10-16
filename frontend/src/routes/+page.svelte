@@ -37,7 +37,7 @@
 <svelte:window bind:innerWidth></svelte:window>
 
 <section id="hero">
-  <div class="hero-bg" style="background-image: url({urlFor(data.imageBackground.asset).width(innerWidth > 900 ? 2560 : 1280)})">
+  <div class="hero-bg" style="background-image: url({urlFor(data.imageBackground.asset).width(innerWidth > 900 ? 1920 : 1280)})">
     <swiper-container class="hero-fg-container"
     init="false"
     autoplay-delay={4000}

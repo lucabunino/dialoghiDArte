@@ -58,7 +58,7 @@
         }}
         />
       </div>
-      {#if data.archive[0]?.credits}
+      <!-- {#if data.archive[0]?.credits}
         <div class="credits">
           {#each data.archive[0]?.credits as credit, j}
             {#if credit._type === 'partners' && credit.partnersArray?.length}
@@ -97,6 +97,52 @@
                   <p>{custom?.title}</p>
                 {/if}
               {/each}
+            {/if}
+          {/each}
+        </div>
+      {/if} -->
+      {#if data.archive[0]?.credits}
+      {$inspect(data.archive[0]?.credits)}
+        <div class="credits text-xs">
+          {#each data.archive[0]?.credits as credit, j}
+            {#if credit._type === 'partners' && credit.partnersArray?.length}
+              <p class="credit">Partners</p>
+              {#each credit.partnersArray as partner, k}
+                {#if partner.link}
+                  <a target="_blank" href={partner.link}><p class="underline">{partner.title} ↗</p></a><br>
+                {:else}
+                  <p>{partner?.title}</p>
+                {/if}
+              {/each}
+            {:else if credit._type === 'sponsors' && credit.sponsorsArray?.length}
+              <p class="credit">Sponsors</p>
+              {#each credit.sponsorsArray as sponsor, k}
+                {#if sponsor.link}
+                  <a target="_blank" href={sponsor.link}><p class="underline">{sponsor.title} ↗</p></a><br>
+                {:else}
+                  <p>{sponsor?.title}</p>
+                {/if}
+              {/each}
+            {:else if credit._type === 'patronages' && credit.patronagesArray?.length}
+              <p class="credit">Con il patrocinio di:</p>
+              {#each credit.patronagesArray as patronage, k}
+                {#if patronage.link}
+                  <a target="_blank" href={patronage.link}><p class="underline">{patronage.title} ↗</p></a><br>
+                {:else}
+                  <p>{patronage?.title}</p>
+                {/if}
+              {/each}
+            {:else if credit._type === 'customCredit'}
+              <p class="credit">{credit.customText}</p>
+              {#if credit.customsArray?.length}
+                {#each credit.customsArray as custom, k}
+                  {#if custom.link}
+                    <a target="_blank" href={custom.link}><p class="underline">{custom.title} ↗</p></a><br>
+                  {:else}
+                    <p>{custom?.title}</p>
+                  {/if}
+                {/each}
+              {/if}
             {/if}
           {/each}
         </div>
