@@ -33,7 +33,6 @@
         window.scrollTo({top: 0})
         setTimeout(() => {
           const targetPosition = element.getBoundingClientRect().top + scrollY - (innerWidth > 900 ? headerHeight + 40 : 62);
-          console.log($page.url.hash, element, element.getBoundingClientRect().top, targetPosition);
           smoothScrollTo(targetPosition);
         }, 300);
       }
@@ -58,7 +57,6 @@
       }, 500);
     }
     const cookieConsent = localStorage.getItem('cookieConsent');
-    console.log(cookieConsent);
     if (cookieConsent === 'accepted') {
       showBanner = false;
     } else {

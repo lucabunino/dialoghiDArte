@@ -13,6 +13,13 @@
   }
 </script>
 
+<svelte:head>
+  <title>{data.seo[0].SEOTitle ? data.seo[0].SEOTitle : ''} | {data.publication[0].title}</title>
+  <meta property="og:title" content="{data.seo[0].SEOTitle ? data.seo[0].SEOTitle : ''} | {data.publication[0].title}">
+  <meta property="og:image" content={urlFor(data.publication[0].image ? data.publication[0].image : data.publication[0].thumbnail).width(innerWidth > 600 ? 1280 : 900)}>
+  <meta property="og:site_name" content="{data.seo[0].SEOTitle ? data.seo[0].SEOTitle : ''} | {data.publication[0].title}">
+</svelte:head>
+
 <svelte:window bind:innerWidth></svelte:window>
 
 <section class="single">
