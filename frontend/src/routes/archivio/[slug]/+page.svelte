@@ -104,7 +104,11 @@
         </div>
       {/if}
     </div>
-    <img class="img" src={urlFor(data.archive[0].image ? data.archive[0].image : data.archive[0].thumbnail).width(innerWidth > 600 ? 1280 : 900)} alt="">
+    <img class="img"
+    class:vertical={!data.archive[0].image}
+    class:horizontal={data.archive[0].image?.aspectRatio > 1}
+    src={urlFor(data.archive[0].image ? data.archive[0].image : data.archive[0].thumbnail).width(innerWidth > 600 ? 1280 : 900)} alt=""
+    >
   </div>
 </section>
 

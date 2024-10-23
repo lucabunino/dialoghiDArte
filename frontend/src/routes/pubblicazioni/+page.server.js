@@ -4,8 +4,8 @@ import { error } from '@sveltejs/kit';
 
 export async function load({ url }) {
 	const editors = await getPublicationsEditors();
-	const serie = url.searchParams.get('editor');
-	const publications = await getPublications(serie);
+	const editor = url.searchParams.get('editor');
+	const publications = await getPublications(editor);
 
 	if (editors && publications) {
 		return {

@@ -1,6 +1,5 @@
 <script>
   const { data } = $props()
-  $inspect(data)
 
   import { urlFor } from '$lib/utils/image';
   import { page } from '$app/stores';
@@ -14,7 +13,9 @@
   // Lifecycle
   $effect(() => {
     const query = $page.url.searchParams?.get('editor');
-    if (query && query !== editorer.editor) {
+    console.log(query);
+    
+    if (query !== editorer.editor) {
       editorer.setEditor(query);
     }
   });

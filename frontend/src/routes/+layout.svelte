@@ -186,11 +186,11 @@
       <p>{#each data.contacts[0].adresses as adress, i}{#if i > 0}{@html ', '}{/if}<a class="underline" target="_blank" href={adress.adressGoogleMaps}>{adress.adressName}</a>{/each}</p>
       <p>P. IVA {data.contacts[0].vat}</p>
     </div>
+    <hr class="flex-break mobile-only">
     <div>
       <p><a class="underline" href="/privacy">Privacy policy</a></p>
       <p><a class="underline" href="/cookies">Cookie policy</a></p>
     </div>
-    <hr class="flex-break mobile-only">
     <div>
       <a class="underline" href="#newsletter" onclick={openNewsletter}>Newsletter</a>
     </div>
@@ -413,7 +413,7 @@ footer>div:nth-child(5) {
 footer>div:nth-child(6) {
   margin-left: 100px;
 }
-footer>div:nth-child(n+4) {
+footer>div:nth-child(n+5) {
   text-align: right;
 }
 footer a:hover {
@@ -435,14 +435,17 @@ footer a:hover {
     flex-wrap: wrap;
     justify-content: flex-start;
   }
-  footer>div:nth-child(1) {
-    margin-right: 40px;
-  }
+  footer>div:nth-child(1),
+  footer>div:nth-child(2),
   footer>div:nth-child(4) {
-    margin-left: unset;
+    width: 50%;
+    margin: 0;
   }
   footer>div:nth-child(5) {
-    margin-left: 40px;
+    margin-left: unset;
+  }
+  footer>div:nth-child(6) {
+    margin-left: 20px;
   }
   footer>div:nth-child(n+3) {
     text-align: left;
@@ -455,6 +458,21 @@ footer a:hover {
     width: 0;
     height: 0;
     border: none;
+  }
+}
+@media screen and (max-width: 400px) {
+  footer {
+    flex-direction: column;
+    gap: 0;
+  }
+  footer>div:nth-child(1),
+  footer>div:nth-child(2),
+  footer>div:nth-child(4),
+  footer>div:nth-child(5) {
+    margin-top: 1rem;
+  }
+  footer>div:nth-child(6) {
+    margin: 0;
   }
 }
 
