@@ -225,3 +225,21 @@ export async function getPerson(slug) {
 		}
 	`, { slug });
 }
+
+// Cookies
+export async function getCookies() {
+	return await client.fetch(`
+		*[_type == "policy" && kind =='cookies'] {
+			...,
+		}[0...1]
+	`
+)};
+
+// Privacy
+export async function getPrivacy() {
+	return await client.fetch(`
+		*[_type == "policy" && kind =='privacy'] {
+			...,
+		}[0...1]	
+	`
+)};

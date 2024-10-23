@@ -7,6 +7,7 @@ import person from './person'
 import entity from './entity'
 import seo from './seo'
 import contact from './contact'
+import policy from './policy'
 
 export const schemaTypes = [
   whatWeDo,
@@ -18,4 +19,5 @@ export const schemaTypes = [
   entity,
   seo,
   contact,
+  policy,
 ]

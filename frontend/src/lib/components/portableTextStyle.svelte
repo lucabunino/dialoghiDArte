@@ -5,10 +5,10 @@
   export let portableText: BlockComponentProps
 
   $: ({global, value} = portableText)
-  $: ({style} = value)
+  $: ({style, listItem} = value);  
 </script>
 
-{#if style === 'normal'}
+{#if style === 'normal' && !listItem}
   <p><slot /></p>
 {:else if style=== 'h3'}
   <h3 class="text-l"><slot /></h3>
@@ -16,42 +16,35 @@
   <h4><slot /></h4>
 {:else if value.href}
   <!-- <a class="underline active inverted" href={value.href} target={value.blank ? '_blank' : undefined}> -->
-  <a class="" href={value.href} target={value.blank ? '_blank' : undefined}>
+  <a class="link" href={value.href} target={value.blank ? '_blank' : undefined}>
     <slot />
   </a>
-{:else if value.listItem === 'bullet'}
-  <ul class="list">
-    <slot />
-  </ul>
+{:else if listItem == 'bullet'}
+  <li><slot /></li>
 {/if}
 
 <style>
-a {
+.link {
   color: var(--blue);
   text-decoration: underline;
 }
 a:hover {
   text-decoration: none;
 }
-p, ul {
+p, li:last-of-type {
   margin-bottom: 1em;
 }
-.list {
-  list-style-type: none;
-  padding-left: 0;
-}
-:global(.list li::before) {
-  content: "–";
-  margin-right: .5em;
+:global(ul) {
+  list-style-type: disc;
+  padding-left: 1em;
 }
 h3 {
-  margin-top: 4rem;
+  margin-top: 3rem;
   margin-bottom: .5rem;
   font-weight: 500;
 }
 h4 {
   margin-top: 2rem;
-  margin-bottom: .5rem;
-  text-transform: uppercase;
+  font-weight: 700;
 }
 </style>

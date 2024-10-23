@@ -400,7 +400,6 @@ section.list>.grid {
 }
 .credits, .info {
   margin-top: calc(var(--margin)*3);
-  /* font-size: 13px; */
 }
 .credit {
   margin-top: 1em;

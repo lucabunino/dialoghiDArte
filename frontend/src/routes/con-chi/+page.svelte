@@ -8,7 +8,7 @@
   <div class="con-chi-container grid">
     {#each data.people as person, i}
     <div class="person">
-      <img class="thumbnail square" src={person.thumbnail ? urlFor(person.thumbnail.asset).width(900) : ''} alt="">
+      <img class="thumbnail square" src={person.thumbnail ? urlFor(person.thumbnail.asset).width(600) : ''} alt="">
       <h3 class="person-title text-m">
         {#if person.externalLink}
           <a href={person.externalLink} target="_blank" class="underline">{person.title} ↗</a>

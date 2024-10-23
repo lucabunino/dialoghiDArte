@@ -15,6 +15,7 @@
     const swiperEl1 = document.querySelector('.hero-fg-container');
     swiperEl1.initialize();
     visible=true
+    
     const swiperEl2 = document.querySelector('.con-chi-container');
     const swiperParams2 = {
       breakpoints: {
@@ -37,7 +38,8 @@
 <svelte:window bind:innerWidth></svelte:window>
 
 <section id="hero">
-  <div class="hero-bg" style="background-image: url({urlFor(data.imageBackground.asset).width(innerWidth > 900 ? 1920 : 1280)})">
+  <div class="hero-bg">
+    <img class="hero-bg-img" src={urlFor(data.imageBackground.asset).width(innerWidth > 900 ? 2560 : 1280)} alt="">
     <swiper-container class="hero-fg-container"
     init="false"
     autoplay-delay={4000}
@@ -60,7 +62,7 @@
   <div class="cosa-facciamo-container grid">
     {#each data.whatWeDos as item, i}
     <a class="item" href="/cosa-facciamo/{item.slug.current}">
-      <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset).width(900) : ''} alt="">
+      <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset).width(600) : ''} alt="">
       <div class="tags">
         {#each item.category as category}
           <button class="btn tag pointer-events-none">{category.title}</button>
@@ -94,7 +96,7 @@
     >
       {#each data.people as person, i}
         <swiper-slide class="person" class:hidden={!visible}>
-          <img class="thumbnail" src={person.thumbnail ? urlFor(person.thumbnail.asset).width(900) : ''} alt="">
+          <img class="thumbnail" src={person.thumbnail ? urlFor(person.thumbnail.asset).width(400) : ''} alt="">
           <h3 class="person-title text-m">
             {#if person.externalLink}
               <a href={person.externalLink} target="_blank" class="underline">{person.title} ↗</a>
@@ -114,7 +116,7 @@
   <div class="publications-container grid">
     {#each data.publications as publication, i}
       <a class="publication" href="/pubblicazioni/{publication.slug.current}">
-        <img class="thumbnail" src={publication.thumbnail ? urlFor(publication.thumbnail.asset).width(900) : ''} alt="">
+        <img class="thumbnail" src={publication.thumbnail ? urlFor(publication.thumbnail.asset).width(600) : ''} alt="">
         {#if publication.editor}
           <div class="tags">
             <button class="btn tag pointer-events-none">{@html formatSubstring(publication.editor.title, "Dd’A", "no-uppercase")}</button>
@@ -209,7 +211,7 @@
   <div class="archivio-container grid">
     {#each data.archive as item, i}
       <a class="item" href="/archivio/{item.slug.current}">
-        <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset).width(900) : ''} alt="">
+        <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset).width(600) : ''} alt="">
         <div class="tags">
           {#each item.category as category}
             <!-- <a href="/archivio?category={category.slug.current}" class="btn tag">{category.title}</a> -->
@@ -271,6 +273,12 @@ h2 {
   justify-content: center;
   display: flex;
   cursor: pointer;
+}
+.hero-bg-img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
 }
 .hero-fg {
   width: 100%;

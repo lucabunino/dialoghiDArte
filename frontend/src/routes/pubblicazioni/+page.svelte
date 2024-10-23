@@ -42,7 +42,7 @@
   <div class="pubblicazioni-container grid">
     {#each data.publications as publication, i}
       <a class="publication" href="/pubblicazioni/{publication.slug.current}">
-        <img class="thumbnail" src={publication.thumbnail ? urlFor(publication.thumbnail.asset).width(900) : ''} alt="">
+        <img class="thumbnail" src={publication.thumbnail ? urlFor(publication.thumbnail.asset).width(600) : ''} alt="">
         {#if publication.editor}
           <div class="tags">
             <button class="btn tag pointer-events-none">{@html formatSubstring(publication.editor.title, "Dd’A", "no-uppercase")}</button>

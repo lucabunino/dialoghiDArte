@@ -40,10 +40,9 @@
   <div class="archivio-container grid">
     {#each data.archive as item, i}
     <a class="item" href="/archivio/{item.slug.current}">
-      <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset).width(900) : ''} alt="">
+      <img class="thumbnail" src={item.thumbnail ? urlFor(item.thumbnail.asset).width(600) : ''} alt="">
       <div class="tags">
         {#each item.category as category}
-        <!-- <a href="/archivio?category={category.slug.current}" class="btn tag">{category.title}</a> -->
           <button class="btn tag pointer-events-none">{category.title}</button>
         {/each}
       </div>

@@ -13,8 +13,6 @@
   import { beforeNavigate, afterNavigate, pushState, replaceState } from '$app/navigation';
   import { onMount } from 'svelte';
 
-  console.log($page.url);
-
   // Variables
   let innerHeight = $state()
   let innerWidth = $state()
@@ -25,6 +23,7 @@
   let headerFixed = $state(false)
   let showMenu = $state(false)
   let menuHeight = $state()
+  let showBanner = $state();
 
   afterNavigate (() => {
     if ($page.url.hash && $page.url.hash !== '#newsletter') {
@@ -53,9 +52,21 @@
         replaceState('', { showNewsletter: true }, '#newsletter');
       }, 500);
     }
+    const cookieConsent = localStorage.getItem('cookieConsent');
+    console.log(cookieConsent);
+    if (cookieConsent === 'accepted') {
+      showBanner = false;
+    } else {
+      showBanner = true;
+    }
   })
 
   // Functions
+  function acceptCookies() {
+    localStorage.setItem('cookieConsent', 'accepted');
+    showBanner = false;
+  }
+
   function handleScroll() {
     const scrollDiff = scrollY - prevScroll;
     if (!headerFixed && !$navigating && scrollY > headerHeight && scrollDiff > 30) {
@@ -175,6 +186,10 @@
       <p>{#each data.contacts[0].adresses as adress, i}{#if i > 0}{@html ', '}{/if}<a class="underline" target="_blank" href={adress.adressGoogleMaps}>{adress.adressName}</a>{/each}</p>
       <p>P. IVA {data.contacts[0].vat}</p>
     </div>
+    <div>
+      <p><a class="underline" href="/privacy">Privacy policy</a></p>
+      <p><a class="underline" href="/cookies">Cookie policy</a></p>
+    </div>
     <hr class="flex-break mobile-only">
     <div>
       <a class="underline" href="#newsletter" onclick={openNewsletter}>Newsletter</a>
@@ -233,7 +248,7 @@
                   </div>
                   <div class="mc-field-group input-group checkbox-group">
                     <input type="checkbox" name="group[48808][1]" id="mce-group[48808]-48808-0" value="">
-                    <label for="mce-group[48808]-48808-0">Acconsento al trattamento dei miei dati personali (nome, cognome e indirizzo email) per l'invio della newsletter, in conformità con la <a class="underline active inverted" href="/privacy">Privacy Policy</a></label>
+                    <label for="mce-group[48808]-48808-0">Acconsento al trattamento dei miei dati personali (nome, cognome e indirizzo email) per l'invio della newsletter, in conformità con la <a class="underline active inverted" style="color: var(--blue);" href="/privacy">Privacy Policy</a></label>
                   </div>
               <div id="mce-responses" class="clear foot">
                   <div class="response" id="mce-error-response" style="display: none;"></div>
@@ -253,6 +268,12 @@
       </div>
     </div>
   </div>
+  {/if}
+  {#if showBanner}
+    <div id="cookie-banner">
+      <p>Utilizziamo solo cookie tecnici per garantirti la migliore esperienza di navigazione sul nostro sito. Questi cookie sono necessari per il funzionamento del sito e non richiedono il tuo consenso.  Per saperne di più, consulta la nostra <a href="cookies" style="color: var(--blue);" class="underline active inverted">Cookie Policy</a></p>
+      <button class="btn" onclick={acceptCookies}>Ok, ho capito</button>
+    </div>
   {/if}
 {:else}
 <div style="display: flex; width:100vw; height:100vh; align-items:center; justify-content:center;">
@@ -380,19 +401,19 @@ footer {
 footer .flex-break {
   display: none;
 }
-footer>div:nth-child(1) {
+footer>div:nth-child(1), footer>div:nth-child(2) {
   margin-right: 100px;
 }
-footer>div:nth-child(2) {
+footer>div:nth-child(3) {
   margin-right: auto;
 }
-footer>div:nth-child(4) {
+footer>div:nth-child(5) {
   margin-left: auto;
 }
-footer>div:nth-child(5) {
+footer>div:nth-child(6) {
   margin-left: 100px;
 }
-footer>div:nth-child(n+3) {
+footer>div:nth-child(n+4) {
   text-align: right;
 }
 footer a:hover {
@@ -542,5 +563,22 @@ input:checked {
     top: 63px;
     height: calc(100dvh - 63px);
   }
+}
+
+/* Cookies */
+#cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: var(--margin);
+  padding: var(--margin);
+  max-width: 650px;
+  height: auto;
+  z-index: 3;
+  border: solid 2px var(--blue);
+  background-color: var(--bg);
+}
+#cookie-banner>button {
+  margin-top: 1rem;
 }
 </style>
