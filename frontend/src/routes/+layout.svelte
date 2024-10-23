@@ -44,6 +44,11 @@
     if (scrollY < headerHeight) {
       scrolledDown = false;
     }
+    if($page.state.showNewsletter) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   })
 
   onMount(() => {
@@ -136,7 +141,7 @@
   <meta property="og:site_name" content={data.seo[0].SEOTitle ? data.seo[0].SEOTitle : ''}>
 </svelte:head>
 
-<svelte:window onkeyup={handleKey} bind:scrollY bind:innerHeight bind:innerWidth onscroll={handleScroll} on:wheel|nonpassive={e => {if($page.state.showNewsletter)e.preventDefault()}}></svelte:window>
+<svelte:window onkeyup={handleKey} bind:scrollY bind:innerHeight bind:innerWidth onscroll={handleScroll}></svelte:window>
 
 {#if viewGrid}
   <div id="layout"
@@ -461,9 +466,19 @@ footer a:hover {
   }
 }
 @media screen and (max-width: 400px) {
+  footer>div:nth-child(6) {
+    margin-left: 10px;
+  }
+}
+@media screen and (max-width: 360px) {
   footer {
     flex-direction: column;
     gap: 0;
+  }
+  footer>div:nth-child(1),
+  footer>div:nth-child(2),
+  footer>div:nth-child(4) {
+    width: auto;
   }
   footer>div:nth-child(1),
   footer>div:nth-child(2),
