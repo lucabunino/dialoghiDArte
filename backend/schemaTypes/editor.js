@@ -1,8 +1,8 @@
 import { TagsIcon } from '@sanity/icons'
 
 export default {
-  name: 'series',
-  title: 'Collana',
+  name: 'editor',
+  title: 'Editor',
   type: 'document',
   icon: TagsIcon,
   fields: [
@@ -10,12 +10,6 @@ export default {
       name: 'title',
       title: 'Titolo',
       type: 'string',
-    },
-    {
-      name: 'description',
-      title: 'Descrizione',
-      type: 'text',
-      rows: 2,
     },
     {
       name: 'slug',
@@ -26,6 +20,11 @@ export default {
         source: 'title',
         maxLength: 96,
       },
+    },
+    {
+      name: 'link',
+      title: 'Link',
+      type: 'url',
     },
   ],
 };

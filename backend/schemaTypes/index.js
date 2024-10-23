@@ -1,6 +1,6 @@
 import whatWeDo from './whatWeDo'
 import category from './category'
-import series from './series'
+import editor from './editor'
 import publication from './publication'
 import homepage from './homepage'
 import person from './person'
@@ -12,7 +12,7 @@ export const schemaTypes = [
   whatWeDo,
   publication,
   category,
-  series,
+  editor,
   homepage,
   person,
   entity,

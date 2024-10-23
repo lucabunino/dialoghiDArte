@@ -50,21 +50,6 @@ export default {
       group: 'hero',
     },
     {
-      name: 'series',
-      title: 'Collane in evidenza',
-      type: 'array',
-      of: [
-        {
-          name: 'serie',
-          title: 'Collana in evidenza',
-          type: 'reference',
-          to: [{type: 'series'}],
-        }
-      ],
-      group: 'publications',
-      validation: Rule => Rule.unique()
-    },
-    {
       name: 'aboutIntro',
       title: 'Introduzione',
       type: 'text',
@@ -140,7 +125,7 @@ export default {
           fields: [
             {name: 'title', title: 'Titolo', type: 'string'},
             {name: 'content', title: 'Contenuto', type: 'text', rows: 5,},
-            {name: 'entities', title: 'Entità', type: 'array', of: [{name: 'entity', title: 'Entità', type: 'reference', to: [{type: 'entity'}]},]},
+            {name: 'entities', title: 'Entità/Editori', type: 'array', of: [{name: 'entity', title: 'Entità', type: 'reference', to: [{type: 'entity'}]}, {name: 'editor', title: 'Editore', type: 'reference', to: [{type: 'editor'}]},]},
           ]
         },
       ],

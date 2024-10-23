@@ -193,6 +193,8 @@ a:any-link {
   aspect-ratio: 4/5;
   background-color: var(--lightBlue);
   object-fit: cover;
+  width: 100%;
+  height: auto;
 }
 .tags {
   display: flex;
@@ -238,6 +240,9 @@ a:any-link {
   width: 100%;
   aspect-ratio: 1;
   filter: grayscale(1);
+}
+.no-uppercase {
+  text-transform: none;
 }
 @media screen and (min-width: 1900px) {
   .grid {

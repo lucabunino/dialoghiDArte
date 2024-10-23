@@ -11,7 +11,7 @@
 {#if style === 'normal'}
   <p><slot /></p>
 {:else if style=== 'h3'}
-  <h3><slot /></h3>
+  <h3 class="text-l"><slot /></h3>
 {:else if style=== 'h4'}
   <h4><slot /></h4>
 {:else if value.href}
@@ -43,5 +43,15 @@ p, ul {
 :global(.list li::before) {
   content: "–";
   margin-right: .5em;
+}
+h3 {
+  margin-top: 4rem;
+  margin-bottom: .5rem;
+  font-weight: 500;
+}
+h4 {
+  margin-top: 2rem;
+  margin-bottom: .5rem;
+  text-transform: uppercase;
 }
 </style>

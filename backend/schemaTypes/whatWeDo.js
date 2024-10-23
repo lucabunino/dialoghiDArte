@@ -131,7 +131,7 @@ export default {
                 {
                   name: 'partner',
                   type: 'reference',
-                  to: [{type: 'entity'}, {type: 'person'}], // Allow referencing both entity and person
+                  to: [{type: 'entity'}, {type: 'person'}, {type: 'editor'}],
                 }
               ]
             }
@@ -162,7 +162,7 @@ export default {
                 {
                   name: 'sponsor',
                   type: 'reference',
-                  to: [{type: 'entity'}, {type: 'person'}], // Allow referencing both entity and person
+                  to: [{type: 'entity'}, {type: 'person'}, {type: 'editor'}],
                 }
               ]
             }
@@ -193,7 +193,7 @@ export default {
                 {
                   name: 'patronage',
                   type: 'reference',
-                  to: [{type: 'entity'}, {type: 'person'}], // Allow referencing both entity and person
+                  to: [{type: 'entity'}, {type: 'person'}, {type: 'editor'}],
                 }
               ]
             }
@@ -231,7 +231,7 @@ export default {
                 {
                   name: 'custom',
                   type: 'reference',
-                  to: [{type: 'entity'}, {type: 'person'}],
+                  to: [{type: 'entity'}, {type: 'person'}, {type: 'editor'}],
                 }
               ]
             }

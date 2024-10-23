@@ -6,6 +6,7 @@
   register();
   import { onMount } from 'svelte'
   import { pushState } from '$app/navigation'
+  import { formatSubstring } from '$lib/utils/substring.js'  
 
   let innerWidth = $state()
   let visible = $state(false)
@@ -21,8 +22,7 @@
         1600: {slidesPerView: 6.3,},
         1200: {slidesPerView: 5.3,},
         900: {slidesPerView: 4.3, slidesOffsetBefore: 20, slidesOffsetAfter: 20,},
-        750: {slidesPerView: 3.3,},
-        600: {slidesPerView: 2.4,},
+        600: {slidesPerView: 3.3,},
       },
     };
     Object.assign(swiperEl2, swiperParams2);
@@ -77,7 +77,7 @@
   <h2 class="con-chi-title text-xl">Con chi</h2>
     <swiper-container class="con-chi-container"
     init="false"
-    slides-per-view={1.5}
+    slides-per-view={2.4}
     space-between={10}
     speed={700}
     slides-offset-before={10}
@@ -111,27 +111,22 @@
 
 <section id="publications" title="Pubblicazioni">
   <h2 class="text-xl">Pubblicazioni</h2>
-  {#each data.publications as series, i}
-    <div class="publications-titles">
-      <h3 class="publications-title text-l">{series.title}</h3>
-      {#if series.description}<h4 class="uppercase">{series.description}</h4>{/if}
-    </div>
-    <div class="publications-container grid">
-      {#each series.publications as publication, j}
-        <a class="publication" href="/pubblicazioni/{publication.slug.current}">
-          <img class="thumbnail" src={publication.thumbnail ? urlFor(publication.thumbnail.asset).width(900) : ''} alt="">
-          {#if publication.series}
-            <div class="tags mobile-only">
-              <button class="btn tag pointer-events-none">{publication.series.title}</button>
-            </div> 
-          {/if}
-          <h3 class="publication-title text-m">{publication.title}</h3>
-          <p class="uppercase block">#Publicazioni</p>
-          {#if publication.curator}<p class="publication-curator uppercase block">A cura di {publication.curator.title}</p>{/if}
-        </a>
-      {/each}
-    </div>
-  {/each}
+  <div class="publications-container grid">
+    {#each data.publications as publication, i}
+      <a class="publication" href="/pubblicazioni/{publication.slug.current}">
+        <img class="thumbnail" src={publication.thumbnail ? urlFor(publication.thumbnail.asset).width(900) : ''} alt="">
+        {#if publication.editor}
+          <div class="tags">
+            <button class="btn tag pointer-events-none">{@html formatSubstring(publication.editor.title, "Dd’A", "no-uppercase")}</button>
+          </div> 
+        {/if}
+        <h3 class="publication-title text-m">{publication.title}</h3>
+        <p class="uppercase block">#Publicazioni</p>
+        {#if publication.curator}<p class="publication-curator uppercase block">A cura di {publication.curator.title}</p>{/if}
+        {#if publication.author}<p class="publication-author uppercase block">Di {publication.author.title}</p>{/if}
+      </a>
+    {/each}
+  </div>
   <a class="btn cta" href="/pubblicazioni">Vedi tutto →</a>
 </section>
 
@@ -150,7 +145,7 @@
             {:else}
                 <h4 class="chi-siamo-title text-m">{aboutContent.person.title}</h4>
             {/if}
-            {#if aboutContent.person.role}<p class="uppercase">{aboutContent.person.role}</p>{/if}
+            {#if aboutContent.person.role}<p class="uppercase">{@html formatSubstring(aboutContent.person.role, "Dd’A", "no-uppercase")}</p>{/if}
             {#if aboutContent.person.email}<a href="mailto:{aboutContent.person.email}"><p class="underline active inverted">{aboutContent.person.email}</p></a>{/if}
             {#if aboutContent.extra}<p>{aboutContent.extra}</p>{/if}
           {/if}
@@ -258,8 +253,8 @@ h2 {
 
 /* Hero */
 #hero {
-  height: calc(100vh - (2.5rem + var(--margin)*2));
-  height: calc(100svh - (2.5rem + var(--margin)*2));
+  height: calc(100vh - (2.5rem + var(--margin)*2) + 1px);
+  height: calc(100svh - (2.5rem + var(--margin)*2) + 1px);
 }
 .hero-fg-container {
   width: 45%;
@@ -317,13 +312,13 @@ h2 {
 }
 
 /* Publications */
-.publications-titles {
+/* .publications-titles {
   margin-top: calc(var(--margin)*2);
   margin-bottom: calc(var(--gutter)*3);
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-}
+} */
 .publications-container:not(:last-of-type) {
   margin-bottom: calc(var(--margin)*3);
 }
@@ -370,9 +365,9 @@ h2 {
 }
 
 @media screen and (max-width: 900px) {
-  .publications-titles {
+  /* .publications-titles {
     display: none;
-  }
+  } */
   .publications-container > :nth-child(n+3) {
     display: none;
   }

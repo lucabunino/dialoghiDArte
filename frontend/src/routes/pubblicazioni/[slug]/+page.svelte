@@ -32,9 +32,10 @@
     <div class="titles">
       <h1 class="text-xl">{data.publication[0].title}</h1>
       {#if data.publication[0].curator}<h2 class="text-l">A cura di {data.publication[0].curator.title}</h2>{/if}
+      {#if data.publication[0].author}<h2 class="text-l">Di {data.publication[0].author.title}</h2>{/if}
     </div>
     <div class="tags">
-      <a href="/pubblicazioni?series={data.publication[0].series.slug.current}" class="btn tag">{data.publication[0].series.title}</a>
+      <a href="/pubblicazioni?editor={data.publication[0].editor.slug.current}" class="btn tag">{data.publication[0].editor.title}</a>
     </div>
   </div>
   <div class="content">
@@ -66,9 +67,12 @@
         {#if data.publication[0].curator}
           <p>A cura di {data.publication[0].curator.title}</p>
         {/if}
+        {#if data.publication[0].author}
+          <p>Di {data.publication[0].author.title}</p>
+        {/if}
         {#if data.publication[0].editor}
           {#if data.publication[0].editor.link}
-            <a href={data.publication[0].editor.link}><p class="curator underline">{data.publication[0].editor.title}</p></a>
+            <a href={data.publication[0].editor.link} target="_blank"><p class="curator underline">{data.publication[0].editor.title} ↗</p></a>
           {:else}
             <p>{data.publication[0].editor.title}</p>
           {/if}

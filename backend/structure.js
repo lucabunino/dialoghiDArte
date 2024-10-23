@@ -19,8 +19,8 @@ export const myStructure = (S, context) => {
     S.divider(),
     S.documentTypeListItem('category')
       .title('Categorie'),
-    S.documentTypeListItem('series')
-      .title('Collane'),
+    S.documentTypeListItem('editor')
+      .title('Editori'),
     S.documentTypeListItem('person')
       .title('Persone'),
     S.documentTypeListItem('entity')

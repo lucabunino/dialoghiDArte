@@ -1,15 +1,15 @@
 import { getPublications } from '$lib/utils/sanity';
-import { getPublicationsSeries } from '$lib/utils/sanity';
+import { getPublicationsEditors } from '$lib/utils/sanity';
 import { error } from '@sveltejs/kit';
 
 export async function load({ url }) {
-	const series = await getPublicationsSeries();
-	const serie = url.searchParams.get('series');
+	const editors = await getPublicationsEditors();
+	const serie = url.searchParams.get('editor');
 	const publications = await getPublications(serie);
 
-	if (series && publications) {
+	if (editors && publications) {
 		return {
-			series,
+			editors,
       publications,
 		};
 	}

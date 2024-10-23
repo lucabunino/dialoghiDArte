@@ -6,8 +6,9 @@
   const { data, children } = $props()
 
   // Import from svelte/lib
-  import { page, navigating } from '$app/stores';
+  import { page, navigating } from '$app/stores';  
   import { pageIn, pageOut } from '$lib/utils/transition';
+  import { urlFor } from '$lib/utils/image';
   import { formatSocial } from '$lib/utils/social';
   import { beforeNavigate, afterNavigate, pushState, replaceState } from '$app/navigation';
   import { onMount } from 'svelte';
@@ -116,13 +117,13 @@
   <meta name="googlebot" content="index,follow">
   <meta property="og:title" content={data.seo[0].SEOTitle ? data.seo[0].SEOTitle : ''}>
   <meta property="og:description" content={data.seo[0].SEODescription ? data.seo[0].SEODescription : ''}>
-  <meta property="og:image" content={data.seo[0].SEOImage ? urlFor(data.seo[0].SEOImage) : ''}>
+  <meta property="og:image" content={data.seo[0].SEOImage ? urlFor(data.seo[0].SEOImage).width(1920) : ''}>
   <meta property="og:url" content={$page.url}>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content={data.seo[0].SEOTitle ? data.seo[0].SEOTitle : ''}>
 </svelte:head>
 
-<svelte:window onkeyup={handleKey} bind:scrollY bind:innerHeight bind:innerWidth onscroll={handleScroll}></svelte:window>
+<svelte:window onkeyup={handleKey} bind:scrollY bind:innerHeight bind:innerWidth onscroll={handleScroll} on:wheel|nonpassive={e => {if($page.state.showNewsletter)e.preventDefault()}}></svelte:window>
 
 {#if viewGrid}
   <div id="layout"
@@ -133,103 +134,129 @@
   </div>
 {/if}
 
-<header class:up={scrolledDown} class:down={showMenu}>
-  <a class="menu-item" onclick={(e) => {showMenu = false; handleLogoClick()}} href="/" bind:clientHeight={headerHeight}>
-    <svg id="logo" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 45">
-      <path d="M70.94 28.51c0-6.5-4.21-10.18-8.79-10.18s-8.97 3.49-8.97 10.24 4.45 10.36 8.91 10.36 8.85-3.86 8.85-10.42Zm-26.54 0c0-10.06 7.81-16.25 16.11-16.25 4.82 0 8.36 2.08 10.07 3.99h.24V0h8.79v44.14h-8.05l-.61-3.56h-.3c-1.4 1.65-5.31 4.41-10.62 4.41-8.24 0-15.62-6.68-15.62-16.49Zm62.24-19.19h.24l6.65 17.41H99.99l6.65-17.41ZM101.82 0 83.58 44.14h9.94l3.97-10.12h18.48L120 44.14h10L111.7 0h-9.88ZM16.71 37.09c8.05 0 15.98-2.21 15.98-14.53S24.76 7.05 16.71 7.05h-7.5v30.04h7.5ZM0 0h18.3c12.87 0 23.61 7.23 23.61 22.56s-10.74 21.58-23.3 21.58H0V0Zm84.89 15.08c4.15-.8 5.06-2.82 5.06-4.29 0-1.78-1.4-2.21-2.93-2.45-1.52-.24-3.29-1.47-3.29-4.05 0-2.21 1.71-3.86 4.09-3.86 2.99 0 5.43 2.7 5.43 7.05 0 5.83-3.9 8.64-8.17 9.2l-.18-1.59Z"/>
-    </svg>
-  </a>
-  <nav style="max-height: {showMenu ? menuHeight + headerHeight : ''}px">
-    <!-- <button class="mobile-only" id="menuSwitch" onclick={(e) => {showMenu = !showMenu}}>Menu</button> -->
-    <div class="mobile-only" id="menuSwitch" onclick={(e) => {showMenu = !showMenu}} class:crossed={showMenu}>
-      <div class="line"></div>
-      <div class="line"></div>
-      <div class="line"></div>
-    </div>
-    <ul id="menu" bind:clientHeight={menuHeight}>
-      <li class="menu-item underline" onclick={(e) => {showMenu = false}} class:active={$page.url.pathname == '/cosa-facciamo' || $page.url.pathname.includes('/cosa-facciamo/')}><a href="/cosa-facciamo">Cosa facciamo</a></li>
-      <li class="menu-item underline" onclick={(e) => {showMenu = false}} class:active={$page.url.pathname == '/con-chi'}><a href="/con-chi">Con chi</a></li>
-      <li class="menu-item underline" onclick={(e) => {showMenu = false}} class:active={$page.url.pathname == '/pubblicazioni' || $page.url.pathname.includes('/pubblicazioni/')}><a href="/pubblicazioni">Pubblicazioni</a></li>
-      <li class="menu-item underline" onclick={(e) => {showMenu = false}} class:active={$page.url.hash == '#chi-siamo'}><a onclick={handleClick} data-sveltekit-noscroll href="/#chi-siamo">Chi siamo</a></li>
-      <li class="menu-item underline" onclick={(e) => {showMenu = false}} class:active={$page.url.pathname == '/archivio' || $page.url.pathname.includes('/archivio/')}><a href="/archivio">Archivio</a></li>
-    </ul>
-  </nav>
-</header>
 
-{#key data.pathname}
-  <!-- <main style="margin-top: {innerWidth > 900 ? headerHeight+40 : headerHeight}px"> -->
-  <main>
-    {@render children()}
-  </main>
-{/key}
+{#if $page.url.host === 'localhost:5173'}
+  <header class:up={scrolledDown} class:down={showMenu}>
+    <a class="menu-item" onclick={(e) => {showMenu = false; handleLogoClick()}} href="/" bind:clientHeight={headerHeight}>
+      <svg id="logo" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 45">
+        <path d="M70.94 28.51c0-6.5-4.21-10.18-8.79-10.18s-8.97 3.49-8.97 10.24 4.45 10.36 8.91 10.36 8.85-3.86 8.85-10.42Zm-26.54 0c0-10.06 7.81-16.25 16.11-16.25 4.82 0 8.36 2.08 10.07 3.99h.24V0h8.79v44.14h-8.05l-.61-3.56h-.3c-1.4 1.65-5.31 4.41-10.62 4.41-8.24 0-15.62-6.68-15.62-16.49Zm62.24-19.19h.24l6.65 17.41H99.99l6.65-17.41ZM101.82 0 83.58 44.14h9.94l3.97-10.12h18.48L120 44.14h10L111.7 0h-9.88ZM16.71 37.09c8.05 0 15.98-2.21 15.98-14.53S24.76 7.05 16.71 7.05h-7.5v30.04h7.5ZM0 0h18.3c12.87 0 23.61 7.23 23.61 22.56s-10.74 21.58-23.3 21.58H0V0Zm84.89 15.08c4.15-.8 5.06-2.82 5.06-4.29 0-1.78-1.4-2.21-2.93-2.45-1.52-.24-3.29-1.47-3.29-4.05 0-2.21 1.71-3.86 4.09-3.86 2.99 0 5.43 2.7 5.43 7.05 0 5.83-3.9 8.64-8.17 9.2l-.18-1.59Z"/>
+      </svg>
+    </a>
+    <nav style="max-height: {showMenu ? menuHeight + headerHeight : ''}px">
+      <div class="mobile-only" id="menuSwitch" onclick={(e) => {showMenu = !showMenu}} class:crossed={showMenu}>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <ul id="menu" bind:clientHeight={menuHeight}>
+        <li class="menu-item underline" onclick={(e) => {showMenu = false}} class:active={$page.url.pathname == '/cosa-facciamo' || $page.url.pathname.includes('/cosa-facciamo/')}><a href="/cosa-facciamo">Cosa facciamo</a></li>
+        <li class="menu-item underline" onclick={(e) => {showMenu = false}} class:active={$page.url.pathname == '/con-chi'}><a href="/con-chi">Con chi</a></li>
+        <li class="menu-item underline" onclick={(e) => {showMenu = false}} class:active={$page.url.pathname == '/pubblicazioni' || $page.url.pathname.includes('/pubblicazioni/')}><a href="/pubblicazioni">Pubblicazioni</a></li>
+        <li class="menu-item underline" onclick={(e) => {showMenu = false}} class:active={$page.url.hash == '#chi-siamo'}><a onclick={handleClick} data-sveltekit-noscroll href="/#chi-siamo">Chi siamo</a></li>
+        <li class="menu-item underline" onclick={(e) => {showMenu = false}} class:active={$page.url.pathname == '/archivio' || $page.url.pathname.includes('/archivio/')}><a href="/archivio">Archivio</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<footer class="uppercase text-xs">
-  <div>
-    <p>{data.contacts[0].companyName}</p>
-    <p>{data.contacts[0].legalForm}</p>
-  </div>
-  <div>
-    <p>{#each data.contacts[0].adresses as adress, i}{#if i > 0}{@html ', '}{/if}<a class="underline" target="_blank" href={adress.adressGoogleMaps}>{adress.adressName}</a>{/each}</p>
-    <p>P. IVA {data.contacts[0].vat}</p>
-  </div>
-  <hr class="flex-break mobile-only">
-  <div>
-    <a class="underline" href="#newsletter" onclick={openNewsletter}>Newsletter</a>
-  </div>
-  <div>
-    <p class="desktop-only">Seguici su</p>
-    {#each data.contacts[0].socials as social, i}
-      <a class="social-link" target="_blank" href={social}>
-        {#if formatSocial(social)[0] === 'instagram'}
-          <svg class="ig-icon desktop-only" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <path d="M15.04 0H4.98C2.25-.02 0 2.23 0 4.97v10.07A4.96 4.96 0 0 0 4.96 20h10.08A4.96 4.96 0 0 0 20 15.04V4.97C20 2.23 17.78 0 15.04 0ZM10 15.18c-2.87 0-5.18-2.32-5.18-5.19S7.13 4.8 10 4.8s5.18 2.31 5.18 5.19-2.31 5.19-5.18 5.19Zm4.18-5.19c0 2.32-1.86 4.19-4.18 4.19s-4.18-1.87-4.18-4.19S7.68 5.8 10 5.8s4.18 1.87 4.18 4.19Z"/>
-          </svg>
-          <p class="mobile-only underline">Instagram</p>
-        {/if}
-        {#if formatSocial(social)[0] === 'x'}
-          <p>X</p>
-        {/if}
-        {#if formatSocial(social)[0] === 'facebook'}
-          <p>Facebook</p>
-        {/if}
-        {#if formatSocial(social)[0] === 'youtube'}
-          <p>Youtube</p>
-        {/if}
-        {#if formatSocial(social)[0] === 'pinterest'}
-          <p>Pinterest</p>
-        {/if}
-      </a>
-    {/each}
-  </div>
-</footer>
+  {#key data.pathname}
+    <main>
+      {@render children()}
+    </main>
+  {/key}
 
-{#if $page.state.showNewsletter}
-<div id="newsletter-bg" onclick={closeNewsletter}></div>
-<div id="newsletter">
-  <button id="newsletter-switch" onclick={closeNewsletter}>
-    <div class="cross-line"></div>
-    <div class="cross-line"></div>
-  </button>
-  <div class="newsletter-intro text-l">
-    <p style="margin-bottom: 1em;">Ci occupiamo di partecipazione culturale per far crescere il capitale culturale delle persone.</p>
-    <p>Iscriviti alla nostra Newsletter.</p>
-    <p>Condivideremo storie, progetti e opportunità che trasformano luoghi e persone attraverso la cultura.</p>
-  </div>
-  <form action="https://YOUR_MAILCHIMP_URL" method="POST" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate class="newsletter-form">
+  <footer class="uppercase text-xs">
     <div>
-      <input type="email" id="email" name="EMAIL" required placeholder="Indirizzo e-mail">
+      <p>{data.contacts[0].companyName}</p>
+      <p>{data.contacts[0].legalForm}</p>
     </div>
     <div>
-      <input type="text" id="name" name="NAME" required placeholder="Nome">
+      <p>{#each data.contacts[0].adresses as adress, i}{#if i > 0}{@html ', '}{/if}<a class="underline" target="_blank" href={adress.adressGoogleMaps}>{adress.adressName}</a>{/each}</p>
+      <p>P. IVA {data.contacts[0].vat}</p>
+    </div>
+    <hr class="flex-break mobile-only">
+    <div>
+      <a class="underline" href="#newsletter" onclick={openNewsletter}>Newsletter</a>
     </div>
     <div>
-      <input type="text" id="surname" name="SURNAME" required placeholder="Cognome">
+      <p class="desktop-only">Seguici su</p>
+      {#each data.contacts[0].socials as social, i}
+        <a class="social-link" target="_blank" href={social}>
+          {#if formatSocial(social)[0] === 'instagram'}
+            <svg class="ig-icon desktop-only" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M15.04 0H4.98C2.25-.02 0 2.23 0 4.97v10.07A4.96 4.96 0 0 0 4.96 20h10.08A4.96 4.96 0 0 0 20 15.04V4.97C20 2.23 17.78 0 15.04 0ZM10 15.18c-2.87 0-5.18-2.32-5.18-5.19S7.13 4.8 10 4.8s5.18 2.31 5.18 5.19-2.31 5.19-5.18 5.19Zm4.18-5.19c0 2.32-1.86 4.19-4.18 4.19s-4.18-1.87-4.18-4.19S7.68 5.8 10 5.8s4.18 1.87 4.18 4.19Z"/>
+            </svg>
+            <p class="mobile-only underline">Instagram</p>
+          {/if}
+          {#if formatSocial(social)[0] === 'x'}
+            <p>X</p>
+          {/if}
+          {#if formatSocial(social)[0] === 'facebook'}
+            <p>Facebook</p>
+          {/if}
+          {#if formatSocial(social)[0] === 'youtube'}
+            <p>Youtube</p>
+          {/if}
+          {#if formatSocial(social)[0] === 'pinterest'}
+            <p>Pinterest</p>
+          {/if}
+        </a>
+      {/each}
     </div>
-    <button class="btn" type="submit">Iscriviti</button>
-  </form>
+  </footer>
+
+  {#if $page.state.showNewsletter}
+  <div id="newsletter-bg" onclick={closeNewsletter}></div>
+  <div id="newsletter">
+    <button id="newsletter-switch" onclick={closeNewsletter}>
+      <div class="cross-line"></div>
+      <div class="cross-line"></div>
+    </button>
+    <div class="newsletter-intro text-l">
+      <p style="margin-bottom: 1em;">Ci occupiamo di partecipazione culturale per far crescere il capitale culturale delle persone.</p>
+      <p>Iscriviti alla nostra Newsletter.</p>
+      <p>Condivideremo storie, progetti e opportunità che trasformano luoghi e persone attraverso la cultura.</p>
+    </div>
+    <div id="mc_embed_shell">
+      <div id="mc_embed_signup">
+          <form action="https://dialoghidarte.us14.list-manage.com/subscribe/post?u=1fa5ecea1ac66768564ee33f1&amp;id=f51e52dfb6&amp;f_id=0042bbe5f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate newsletter-form" target="_self" novalidate="">
+              <div id="mc_embed_signup_scroll">
+                  <div class="mc-field-group">
+                    <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value="" placeholder="Indirizzo e-mail*">
+                  </div>
+                  <div class="mc-field-group">
+                    <input type="text" name="FNAME" class=" text" id="mce-FNAME" value="" placeholder="Nome">
+                  </div>
+                  <div class="mc-field-group">
+                    <input type="text" name="LNAME" class=" text" id="mce-LNAME" value="" placeholder="Cognome">
+                  </div>
+                  <div class="mc-field-group input-group checkbox-group">
+                    <input type="checkbox" name="group[48808][1]" id="mce-group[48808]-48808-0" value="">
+                    <label for="mce-group[48808]-48808-0">Acconsento al trattamento dei miei dati personali (nome, cognome e indirizzo email) per l'invio della newsletter, in conformità con la <a class="underline active inverted" href="/privacy">Privacy Policy</a></label>
+                  </div>
+              <div id="mce-responses" class="clear foot">
+                  <div class="response" id="mce-error-response" style="display: none;"></div>
+                  <div class="response" id="mce-success-response" style="display: none;"></div>
+              </div>
+          <div aria-hidden="true" style="position: absolute; left: -5000px;">
+              /* real people should not fill this in and expect good things - do not remove this or risk form bot signups */
+              <input type="text" name="b_1fa5ecea1ac66768564ee33f1_f51e52dfb6" tabindex="-1" value="">
+          </div>
+              <div class="optionalParent">
+                  <div class="clear foot">
+                      <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="btn" value="Iscriviti">
+                  </div>
+              </div>
+          </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  {/if}
+{:else}
+<div style="display: flex; width:100vw; height:100vh; align-items:center; justify-content:center;">
+  <p class="text-m">Under maintenance</p>
 </div>
 {/if}
-
 
 <style>
 /* Header */
@@ -335,7 +362,7 @@ header.up {
 main {
   display: flex;
   flex-direction: column;
-  margin-top: calc(2.5rem + var(--margin)*2);
+  margin-top: calc(2.5rem + var(--margin)*2 - 1px);
 }
 
 /* Footer */
@@ -466,7 +493,7 @@ footer a:hover {
 .newsletter-form {
   margin-top: calc(var(--margin)*2);
 }
-[type="email"], [type="text"] {
+[type="email"], [type="text"], [type="checkbox"] {
   border: solid 1px var(--black);
   padding: 1em;
   width: 100%;
@@ -486,18 +513,32 @@ footer a:hover {
 [type="submit"]:hover {
   color: var(--bg);
 }
+.checkbox-group {
+  display: flex;
+  margin-top: 2rem;
+}
+[type="checkbox"] {
+  appearance: none;
+  height: 2em;
+  width: 2em;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+input:checked {
+  background-color: var(--blue);
+  background:var(--blue) url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNMTczLjg5OCA0MzkuNDA0bC0xNjYuNC0xNjYuNGMtOS45OTctOS45OTctOS45OTctMjYuMjA2IDAtMzYuMjA0bDM2LjIwMy0zNi4yMDRjOS45OTctOS45OTggMjYuMjA3LTkuOTk4IDM2LjIwNCAwTDE5MiAzMTIuNjkgNDMyLjA5NSA3Mi41OTZjOS45OTctOS45OTcgMjYuMjA3LTkuOTk3IDM2LjIwNCAwbDM2LjIwMyAzNi4yMDRjOS45OTcgOS45OTcgOS45OTcgMjYuMjA2IDAgMzYuMjA0bC0yOTQuNCAyOTQuNDAxYy05Ljk5OCA5Ljk5Ny0yNi4yMDcgOS45OTctMzYuMjA0LS4wMDF6Ii8+PC9zdmc+") .5em .5em no-repeat;
+  background-size: 1em 1em;
+}
 @media screen and (max-width: 900px) {
   #newsletter {
     padding: calc(var(--margin)*5) calc(var(--margin)*2.5);
+    width: calc(100% - var(--margin)*2);
   }
 }
 @media screen and (max-width: 600px) {
   #newsletter-bg {
     top: 63px;
     height: calc(100dvh - 63px);
-  }
-  #newsletter {
-    width: calc(100% - var(--margin)*2);
   }
 }
 </style>

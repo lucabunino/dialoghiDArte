@@ -54,7 +54,7 @@ export async function getWhatWeDosHomepage() {
 		*[_type == "whatWeDo" && collector == "whatWeDo" && !(_id in path('drafts.**'))] {
 			...,
 			category[]-> { title, slug } | order(title asc),
-		} | order(date desc)[0...11]
+		} | order(date desc)[0...6]
 	`);
 }
 
@@ -64,24 +64,19 @@ export async function getArchiveHomepage() {
 		*[_type == "whatWeDo" && collector == "archive" && !(_id in path('drafts.**'))] {
 			...,
 			category[]-> { title, slug } | order(title asc),
-		} | order(date desc)[0...11]
+		} | order(date desc)[0...6]
 	`);
 }
 
 // Homepage Publications
 export async function getPublicationsHomepage() {
 	return await client.fetch(`
-	*[_type == "homepage"][0].series[]-> {
-      title,
-      description,
-      "publications": *[_type == "publication" && references(^._id)] | order(_createdAt desc)[0...5] {
-        title,
-        slug,
-        curator-> { "title": name + " " + surname, },
-				series-> {title, slug },
-        thumbnail
-      }
-    }
+		*[_type == "publication" && !(_id in path('drafts.**'))] {
+			...,
+			editor-> {title, link, slug },
+			curator -> { "title": name + " " + surname, },
+			author -> { "title": name + " " + surname, },
+		} | order(date desc)[0...6]
 	`);
 }
 
@@ -150,24 +145,23 @@ export async function getArchiveCategories() {
 }
 
 // Publications
-export async function getPublications(series) {
+export async function getPublications(editor) {
 	return await client.fetch(`
 		*[_type == "publication"
-		${series ? `&& $series == series->slug.current` : ''}
+		${editor ? `&& $editor == editor->slug.current` : ''}
 		&& !(_id in path('drafts.**'))] {
 			...,
-			series-> {title, slug },
+			editor-> {title, link, slug },
 			curator -> { "title": name + " " + surname, },
-			editor -> { title, link },
+			author -> { "title": name + " " + surname, },
 		} | order(date desc)
-	`, { series });
+	`, { editor });
 }
 
-
-// Publications Series
-export async function getPublicationsSeries() {
+// Publications Editors
+export async function getPublicationsEditors() {
 	return await client.fetch(`
-	*[_type == "series" && _id in *[_type == "publication"].series._ref] {
+	*[_type == "editor" && _id in *[_type == "publication"].editor._ref] {
 			"title": title,
 			"slug": slug
 		} | order(title asc)
@@ -208,9 +202,9 @@ export async function getPublication(slug) {
   return await client.fetch(`
     *[_type == "publication" && slug.current == $slug] {
       ...,
-      series -> { title, slug },
       curator -> { "title": name + " " + surname },
-      editor -> { title, link },
+      author -> { "title": name + " " + surname },
+      editor -> { title, slug, link },
       "prev": *[_type == "publication" && date < ^.date] | order(date desc)[0] {
 				slug, date
       },

@@ -40,10 +40,37 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
-      name: 'series',
-      title: 'Collana',
+      name: 'editor',
+      title: 'Editore',
       type: 'reference',
-      to: [{type: 'series'}],
+      to: [{type: 'editor'}],
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'curator',
+      title: 'A cura di',
+      type: 'reference',
+      to: [{type: 'person'}],
+      fieldset: 'info',
+    },
+    {
+      name: 'author',
+      title: 'Autore',
+      type: 'reference',
+      to: [{type: 'person'}],
+      fieldset: 'info',
+    },
+    {
+      name: 'isbn',
+      title: 'ISBN',
+      type: 'string',
+      fieldset: 'info'
+    },
+    {
+      name: 'price',
+      title: 'Prezzo',
+      type: 'number',
+      fieldset: 'info'
     },
     {
       name: 'thumbnail',
@@ -86,32 +113,6 @@ export default {
           },
         }
       ],
-    },
-    {
-      name: 'curator',
-      title: 'A cura di',
-      type: 'reference',
-      to: [{type: 'person'}],
-      fieldset: 'info',
-    },
-    {
-      name: 'editor',
-      title: 'Editore',
-      type: 'reference',
-      to: [{type: 'entity'}],
-      fieldset: 'info',
-    },
-    {
-      name: 'isbn',
-      title: 'ISBN',
-      type: 'string',
-      fieldset: 'info'
-    },
-    {
-      name: 'price',
-      title: 'Prezzo',
-      type: 'number',
-      fieldset: 'info'
     },
     {
       name: 'buyLink',
