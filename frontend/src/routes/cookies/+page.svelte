@@ -25,10 +25,7 @@
             h5: PortableTextStyle,
             h6: PortableTextStyle,
           },
-          list: {
-            bullet: PortableTextStyle,
-            number: PortableTextStyle,
-          },
+          listItem: PortableTextStyle,
           marks: {
             link: PortableTextStyle,
           },
