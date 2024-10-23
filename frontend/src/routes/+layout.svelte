@@ -1,6 +1,6 @@
 <script>
   // Import css
-  import '../app.css'
+  import '../app.css'  
   
   // Import data
   const { data, children } = $props()
@@ -12,6 +12,8 @@
   import { formatSocial } from '$lib/utils/social';
   import { beforeNavigate, afterNavigate, pushState, replaceState } from '$app/navigation';
   import { onMount } from 'svelte';
+
+  console.log($page.url);
 
   // Variables
   let innerHeight = $state()
@@ -135,7 +137,7 @@
 {/if}
 
 
-{#if $page.url.host === 'localhost:5173'}
+{#if $page.url.host === 'localhost:5173' || $page.url.host === 'dialoghi-d-arte.vercel.app'}
   <header class:up={scrolledDown} class:down={showMenu}>
     <a class="menu-item" onclick={(e) => {showMenu = false; handleLogoClick()}} href="/" bind:clientHeight={headerHeight}>
       <svg id="logo" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 45">
