@@ -50,7 +50,7 @@
           </div> 
         {/if}
         <h3 class="publication-title text-m">{publication.title}</h3>
-        <p class="uppercase block">#Publicazioni</p>
+        <p class="uppercase block">#Pubblicazioni</p>
         {#if publication.curator}<p class="publication-curator uppercase block">A cura di {publication.curator.title}</p>{/if}
         {#if publication.author}<p class="publication-curator uppercase block">Di {publication.author.title}</p>{/if}
       </a>

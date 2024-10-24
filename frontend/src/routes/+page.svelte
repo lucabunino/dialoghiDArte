@@ -123,7 +123,7 @@
           </div> 
         {/if}
         <h3 class="publication-title text-m">{publication.title}</h3>
-        <p class="uppercase block">#Publicazioni</p>
+        <p class="uppercase block">#Pubblicazioni</p>
         {#if publication.curator}<p class="publication-curator uppercase block">A cura di {publication.curator.title}</p>{/if}
         {#if publication.author}<p class="publication-author uppercase block">Di {publication.author.title}</p>{/if}
       </a>
@@ -276,7 +276,9 @@ h2 {
 }
 .hero-bg-img {
   width: 100%;
-  height: 100%;
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
   position: absolute;
   object-fit: cover;
 }
