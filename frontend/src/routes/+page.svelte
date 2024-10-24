@@ -19,11 +19,12 @@
     const swiperEl2 = document.querySelector('.con-chi-container');
     const swiperParams2 = {
       breakpoints: {
-        1900: {slidesPerView: 7.3,},
-        1600: {slidesPerView: 6.3,},
-        1200: {slidesPerView: 5.3,},
+        1900: {slidesPerView: 7.3, slidesOffsetBefore: 20, slidesOffsetAfter: 20,},
+        1600: {slidesPerView: 6.3, slidesOffsetBefore: 20, slidesOffsetAfter: 20,},
+        1200: {slidesPerView: 5.3, slidesOffsetBefore: 20, slidesOffsetAfter: 20,},
         900: {slidesPerView: 4.3, slidesOffsetBefore: 20, slidesOffsetAfter: 20,},
-        600: {slidesPerView: 3.3,},
+        600: {slidesPerView: 3.3, slidesOffsetBefore: 10, slidesOffsetAfter: 10,},
+        0: {slidesPerView: 2.3, slidesOffsetBefore: 10, slidesOffsetAfter: 10,},
       },
     };
     Object.assign(swiperEl2, swiperParams2);
@@ -82,8 +83,6 @@
     slides-per-view={2.4}
     space-between={10}
     speed={700}
-    slides-offset-before={10}
-    slides-offset-after={10}
     freeMode={{
       enabled: true,
       sticky: true,
@@ -232,7 +231,7 @@ section:not(#hero, #con-chi) {
   margin-left: var(--margin);
 }
 section:nth-child(2) {
-  padding-top: calc(var(--margin)*2);
+  padding-top: calc(var(--margin)*1);
 }
 section:not(:nth-child(-n+2)) {
   padding-top: calc(2.5rem + var(--margin)*2);

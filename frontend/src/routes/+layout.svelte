@@ -141,17 +141,17 @@
 
 <svelte:window onkeyup={handleKey} bind:scrollY bind:innerHeight bind:innerWidth onscroll={handleScroll}></svelte:window>
 
-{#if viewGrid}
+<!-- {#if viewGrid}
   <div id="layout"
        style="grid-template-columns:repeat({innerWidth > 800 ? gridColumnsDesktop : gridColumnsMobile}, 1fr);pointer-events:none;display: grid;position:fixed; z-index:999;width: -moz-available;width: -webkit-fill-available;height: -moz-available;height: -webkit-fill-available;margin:0 var(--margin);gap:var(--gutter);opacity:.2;">
     {#each Array(innerWidth > 800 ? gridColumnsDesktop : gridColumnsMobile) as _, i}
       <div style="background-color:red"></div>
     {/each}
   </div>
-{/if}
+{/if} -->
 
 
-{#if $page.url.host === 'localhost:5173' || $page.url.host === 'dialoghi-d-arte.vercel.app'}
+<!-- {#if $page.url.host === 'localhost:5173' || $page.url.host === 'dialoghi-d-arte.vercel.app'} -->
   <header class:up={scrolledDown} class:down={showMenu}>
     <a class="menu-item" onclick={(e) => {showMenu = false; handleLogoClick()}} href="/" bind:clientHeight={headerHeight}>
       <svg id="logo" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 45">
@@ -278,11 +278,11 @@
       <button class="btn" onclick={acceptCookies}>Ok, ho capito</button>
     </div>
   {/if}
-{:else}
+<!-- {:else}
 <div style="display: flex; width:100vw; height:100vh; align-items:center; justify-content:center;">
   <p class="text-m">Under maintenance</p>
 </div>
-{/if}
+{/if} -->
 
 <style>
 /* Header */
