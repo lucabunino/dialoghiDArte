@@ -231,6 +231,9 @@ section:not(#hero, #con-chi) {
   margin-right: var(--margin);
   margin-left: var(--margin);
 }
+section:nth-child(2) {
+  padding-top: calc(var(--margin)*2);
+}
 section:not(:nth-child(-n+2)) {
   padding-top: calc(2.5rem + var(--margin)*2);
 }
@@ -276,9 +279,8 @@ h2 {
 }
 .hero-bg-img {
   width: 100%;
-  height: -moz-available;
-  height: -webkit-fill-available;
-  height: fill-available;
+  height: calc(100vh - (2.5rem + var(--margin)*2) + 1px);
+  height: calc(100svh - (2.5rem + var(--margin)*2) + 1px);
   position: absolute;
   object-fit: cover;
 }
@@ -342,10 +344,12 @@ h2 {
   row-gap: calc(var(--margin)*3);
   margin-top: calc(var(--margin)*3);
   font-weight: 400;
+  line-height: 1.3;
 }
 .chi-siamo-intro {
   width: calc((100% - var(--gutter))/2);
   font-weight: 400;
+  line-height: 1.3;
 }
 .chi-siamo-column {
   display: flex;
@@ -385,11 +389,11 @@ h2 {
     width: -webkit-fill-available;
   }
   .chi-siamo-container {
-    line-height: 1.3;
+    line-height: 1.4;
   }
   .chi-siamo-intro {
     width: 100%;
-    line-height: 1.3;
+    line-height: 1.4;
   }
   .chi-siamo-column {
     gap: calc(var(--margin)*3);

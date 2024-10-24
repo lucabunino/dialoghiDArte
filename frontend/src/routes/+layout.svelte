@@ -400,6 +400,7 @@ footer {
   border-top: solid 1px var(--black);
   margin-top: calc(var(--margin)*10);
   row-gap: var(--margin);
+  line-height: 1.3;
 }
 footer .flex-break {
   display: none;
