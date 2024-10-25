@@ -8,7 +8,7 @@ if (!PUBLIC_SANITY_PROJECT_ID || !PUBLIC_SANITY_DATASET) {
 export const client = createClient({
 	projectId: PUBLIC_SANITY_PROJECT_ID,
 	dataset: PUBLIC_SANITY_DATASET,
-	useCdn: false, // `false` if you want to ensure fresh data
+	useCdn: true, // `false` if you want to ensure fresh data
 	apiVersion: '2024-09-23', // date of setup
 });
 
