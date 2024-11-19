@@ -32,6 +32,9 @@ export default {
           name: 'imageForeground',
           title: 'Immagine in primo piano',
           type: 'image',
+          options: {
+            accept: 'image/jpeg,image/png,image/webp', // Specify acceptable formats
+          },
         }
       ],
       group: 'hero',
@@ -45,6 +48,9 @@ export default {
           name: 'imageForeground',
           title: 'Immagine di sfondo',
           type: 'image',
+          options: {
+            accept: 'image/jpeg,image/png,image/webp', // Specify acceptable formats
+          },
         }
       ],
       group: 'hero',

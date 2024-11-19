@@ -26,6 +26,9 @@ export default {
       name: 'SEOImage',
       title: 'Immagine SEO',
       type: 'image',
+      options: {
+        accept: 'image/jpeg,image/png,image/webp', // Specify acceptable formats
+      },
     },
   ],
 }

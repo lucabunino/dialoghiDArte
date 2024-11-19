@@ -65,12 +65,18 @@ export default {
       name: 'thumbnail',
       title: 'Immagine di copertina',
       type: 'image',
+      options: {
+        accept: 'image/jpeg,image/png,image/webp', // Specify acceptable formats
+      },
       validation: (Rule) => Rule.required(),
     },
     {
       name: 'image',
       title: 'Immagine interna',
       type: 'image',
+      options: {
+        accept: 'image/jpeg,image/png,image/webp', // Specify acceptable formats
+      },
     },
     {
       name: 'body',

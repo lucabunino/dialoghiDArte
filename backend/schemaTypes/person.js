@@ -68,6 +68,9 @@ export default {
       name: 'thumbnail',
       title: 'Thumbnail',
       type: 'image',
+      options: {
+        accept: 'image/jpeg,image/png,image/webp', // Specify acceptable formats
+      },
     },
     {
       name: 'body',
